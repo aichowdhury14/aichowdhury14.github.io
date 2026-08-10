@@ -356,16 +356,27 @@
     const nav = $("#nav");
     const toggle = $("#nav-toggle");
     const links = $("#nav-links");
+    const backdrop = $("#nav-backdrop");
 
     window.addEventListener("scroll", () => {
       nav.classList.toggle("scrolled", window.scrollY > 8);
       toTopBtn.classList.toggle("show", window.scrollY > 500);
     });
 
-    toggle.addEventListener("click", () => links.classList.toggle("open"));
-    links.querySelectorAll("a").forEach((a) =>
-      a.addEventListener("click", () => links.classList.remove("open"))
-    );
+    function closeMenu() {
+      links.classList.remove("open");
+      backdrop.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    function toggleMenu() {
+      const isOpen = links.classList.toggle("open");
+      backdrop.classList.toggle("open", isOpen);
+      document.body.style.overflow = isOpen ? "hidden" : "";
+    }
+
+    toggle.addEventListener("click", toggleMenu);
+    backdrop.addEventListener("click", closeMenu);
+    links.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
 
     const sections = document.querySelectorAll("main section[id]");
     const navAnchors = document.querySelectorAll(".nav-links a");
