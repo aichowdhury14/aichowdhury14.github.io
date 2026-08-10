@@ -384,7 +384,7 @@ section { padding: 96px 0; }
 .timeline-item:first-child .timeline-dot { background: var(--accent-grad); border-color: transparent; }
 .timeline-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; justify-content: space-between; }
 .timeline-role { font-size: 1.12rem; font-weight: 700; }
-.timeline-company { color: var(--accent-1); font-weight: 600; }
+.timeline-company { color: #4169e1; font-weight: 600; }
 .timeline-date { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; color: var(--text-faint); white-space: nowrap; }
 .timeline-loc { font-size: 0.85rem; color: var(--text-faint); margin: 4px 0 12px; }
 .timeline-points { display: flex; flex-direction: column; gap: 8px; }
