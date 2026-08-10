@@ -31,7 +31,7 @@ const PORTFOLIO_DATA = {
   about: [
     "I turn raw, messy data into machine learning systems that make real decisions — in production, at scale, under regulatory scrutiny. That's the work I've built my career around.",
     "Over 6+ years in the data and AI industry and 8+ years in research, I've taken models from notebook to production across banking, fintech, and applied science: fraud detection that runs in near real-time, AML monitoring that flags what humans miss, credit risk and churn models banks can rely on, and forecasting that changes how businesses plan.",
-    "Today that means architecting predictive AI at BRAC Bank PLC — end-to-end, from data pipelines to deployed models. I'm also pursuing an M.Sc. in Computer Science and Engineering (Data Science) at United International University, and have co-authored 22 publications across journals, conferences, and book chapters in machine learning, deep learning, and computer vision.",
+    "Today that means architecting predictive AI at BRAC Bank PLC — end-to-end, from data pipelines to deployed models. I'm currently partway through an M.Sc. in Computer Science and Engineering (Data Science) at United International University, and have completed an Advanced Certificate for Management Professionals (ACMP) from the Institute of Business Administration, University of Dhaka. Alongside that, I've co-authored 22 publications across journals, conferences, and book chapters in machine learning, deep learning, and computer vision.",
     "Beyond delivery, I teach data analytics, judge data science competitions, and mentor the next wave of analysts on responsible AI.",
   ],
 
