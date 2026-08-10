@@ -22,7 +22,7 @@
   --radius-sm: 8px;
   --max-w: 1120px;
   --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
-  --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 
