@@ -283,15 +283,31 @@
   }
 
   /* ---------- Academic & additional projects ---------- */
+  const ACADEMIC_ICONS = {
+    "SAir AIR BD LTD — Official Website": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="9" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>',
+    "Face Encoding with Emotion Recognition": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9 10h.01M15 10h.01M8.5 15c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8"/></svg>',
+    "BMI & CGPA Analysis Based on Personality": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="1.4"/><circle cx="11" cy="10" r="1.4"/><circle cx="16" cy="13" r="1.4"/><circle cx="20" cy="6" r="1.4"/><path d="M7 16l3-5M12.3 9.3l2.4 2.4M17.3 12l1.8-4.5"/></svg>',
+    "Banking Management System": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6"/><path d="M5 10v9M9.5 10v9M14.5 10v9M19 10v9"/><path d="M3 19h18"/></svg>',
+    "String Recognizer (Android)": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 11h10"/><circle cx="17" cy="15" r="4"/><path d="M20 18l2.5 2.5"/></svg>',
+    "Text to Speech (Android)": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h4l5 4V6L8 10H4Z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a8 8 0 0 1 0 11"/></svg>',
+    "Teacher-Student Collaboration System": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="8" r="2.4"/><path d="M3 20v-1a5 5 0 0 1 5-5 5 5 0 0 1 5 5v1"/><path d="M14.5 19v-.6a4 4 0 0 1 4-4 4 4 0 0 1 3.5 2"/></svg>',
+    "Hospital Management System": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M12 8v8M8 12h8"/></svg>',
+    "Restaurant Management System": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a2 2 0 0 0 4 0V3M8 10v11M6 3v3M10 3v3"/><path d="M16 3c-1.4 0-2.5 1.8-2.5 5s1.1 5 2.5 5v8"/></svg>',
+  };
+
   function renderAcademicProjects() {
     const wrap = $("#academic-projects-grid");
     if (!wrap || !d.academicProjects) return;
     d.academicProjects.forEach((p) => {
+      const icon = ACADEMIC_ICONS[p.title] || "";
       wrap.appendChild(
         el(
           "div",
           "mini-project reveal",
-          `<div class="mini-project-title">${p.title}</div>
+          `<div class="mini-project-head">
+             <span class="mini-project-icon">${icon}</span>
+             <div class="mini-project-title">${p.title}</div>
+           </div>
            <div class="chip-row">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>`
         )
       );
