@@ -1,0 +1,44 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="25%" r="65%">
+      <stop offset="0%" stop-color="#5eead4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#242b3d"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="#0d1220"/>
+  <rect width="800" height="450" fill="url(#dots)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <rect x="150" y="110" width="200" height="110" rx="10" fill="#171d2b" stroke="#2a3142"/>
+  <g fill="#5eead4" opacity="0.85">
+    <rect x="175" y="175" width="16" height="30" rx="2"/>
+    <rect x="200" y="155" width="16" height="50" rx="2"/>
+    <rect x="225" y="190" width="16" height="15" rx="2"/>
+    <rect x="250" y="140" width="16" height="65" rx="2"/>
+    <rect x="275" y="165" width="16" height="40" rx="2"/>
+    <rect x="300" y="150" width="16" height="55" rx="2"/>
+  </g>
+
+  <rect x="370" y="110" width="270" height="110" rx="10" fill="#171d2b" stroke="#2a3142"/>
+  <path d="M390 190 C420 150, 450 200, 480 160 S 540 140, 620 130" fill="none" stroke="#7c9cff" stroke-width="3" stroke-linecap="round"/>
+
+  <rect x="150" y="240" width="150" height="120" rx="10" fill="#171d2b" stroke="#2a3142"/>
+  <circle cx="225" cy="300" r="38" fill="none" stroke="#2a3142" stroke-width="14"/>
+  <circle cx="225" cy="300" r="38" fill="none" stroke="#b28dff" stroke-width="14" stroke-dasharray="160 240" stroke-linecap="round" transform="rotate(-90 225 300)"/>
+
+  <rect x="320" y="240" width="320" height="120" rx="10" fill="#171d2b" stroke="#2a3142"/>
+  <g transform="translate(480,300)">
+    <circle r="30" fill="none" stroke="url(#g2)" stroke-width="3"/>
+    <path d="M-12 4 L-2 -8 L8 0 L16 -14" fill="none" stroke="url(#g2)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M8 -14 h8 v8" fill="none" stroke="url(#g2)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5eead4"/>
+      <stop offset="100%" stop-color="#b28dff"/>
+    </linearGradient>
+  </defs>
+</svg>

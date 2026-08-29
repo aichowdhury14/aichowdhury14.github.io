@@ -1,0 +1,39 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5eead4"/>
+      <stop offset="100%" stop-color="#7c9cff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#b28dff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#b28dff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#242b3d"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="#0d1220"/>
+  <rect width="800" height="450" fill="url(#dots)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <g transform="translate(220,225)" fill="none" stroke="#5eead4" stroke-width="3">
+    <ellipse cx="0" cy="-70" rx="55" ry="18"/>
+    <path d="M -55 -70 V 70 A 55 18 0 0 0 55 70 V -70"/>
+    <path d="M -55 -25 A 55 18 0 0 0 55 -25" opacity="0.6"/>
+    <path d="M -55 20 A 55 18 0 0 0 55 20" opacity="0.6"/>
+  </g>
+
+  <g transform="translate(580,225)" fill="none" stroke="#7c9cff" stroke-width="3">
+    <ellipse cx="0" cy="-70" rx="55" ry="18"/>
+    <path d="M -55 -70 V 70 A 55 18 0 0 0 55 70 V -70"/>
+    <path d="M -55 -25 A 55 18 0 0 0 55 -25" opacity="0.6"/>
+    <path d="M -55 20 A 55 18 0 0 0 55 20" opacity="0.6"/>
+  </g>
+
+  <g fill="none" stroke="url(#g)" stroke-width="3" stroke-linecap="round">
+    <path d="M 300 190 C 380 150, 420 150, 500 190"/>
+    <path d="M 500 190 l -16 -10 M 500 190 l -6 -18"/>
+    <path d="M 500 260 C 420 300, 380 300, 300 260"/>
+    <path d="M 300 260 l 16 10 M 300 260 l 6 18"/>
+  </g>
+</svg>

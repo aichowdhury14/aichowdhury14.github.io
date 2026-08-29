@@ -138,6 +138,7 @@ const PORTFOLIO_DATA = {
     {
       title: "Real-Time Fraud Detection — bKash Transactions",
       tag: "Banking · Fraud & Risk",
+      image: "assets/img/projects/fraud-detection.svg",
       description:
         "Behavioral and transactional feature engineering to identify suspicious mobile-financial-services activity in near real-time while reducing false positives.",
       stack: ["Python", "Scikit-learn", "SQL", "Production ML"],
@@ -145,6 +146,7 @@ const PORTFOLIO_DATA = {
     {
       title: "ATM Cash-Loading Optimization",
       tag: "Banking · Forecasting",
+      image: "assets/img/projects/atm-cash-optimization.svg",
       description:
         "Forecasting model for branch-level cash demand that reduced idle cash and cash-out incidents while improving provisioning efficiency.",
       stack: ["Time-Series", "Prophet", "SQL", "Power BI"],
@@ -152,6 +154,7 @@ const PORTFOLIO_DATA = {
     {
       title: "AML Transaction Monitoring by Occupation Profile",
       tag: "Banking · Compliance",
+      image: "assets/img/projects/aml-monitoring.svg",
       description:
         "Behavioral monitoring model that profiles customer transactions against declared occupation to flag anomalous patterns for AML investigation.",
       stack: ["Python", "Feature Engineering", "SQL"],
@@ -159,6 +162,7 @@ const PORTFOLIO_DATA = {
     {
       title: "Customer Segmentation & Personalization",
       tag: "Banking · Marketing Analytics",
+      image: "assets/img/projects/customer-segmentation.svg",
       description:
         "Clustering and RFM-based segmentation to improve targeting precision for banking product campaigns.",
       stack: ["K-Means", "RFM", "Scikit-learn"],
@@ -166,6 +170,7 @@ const PORTFOLIO_DATA = {
     {
       title: "Revenue Forecasting (Prophet / ARIMA)",
       tag: "Product Analytics",
+      image: "assets/img/projects/revenue-forecasting.svg",
       description:
         "Time-series forecasting models for revenue prediction, improving accuracy of product and business planning.",
       stack: ["Prophet", "ARIMA", "Python", "Looker Studio"],
@@ -173,6 +178,7 @@ const PORTFOLIO_DATA = {
     {
       title: "Lung Cancer Early Detection Framework (IoT + DSS)",
       tag: "Published Research",
+      image: "assets/img/projects/lung-cancer-detection.svg",
       description:
         "A decision-support framework combining IoT signals with ML for early-stage lung cancer detection, published at IEEE 3ICT 2023.",
       stack: ["Machine Learning", "IoT", "Research"],
@@ -181,6 +187,7 @@ const PORTFOLIO_DATA = {
     {
       title: "Credit Risk Scoring & Churn Prediction",
       tag: "Banking · Risk Modeling",
+      image: "assets/img/projects/credit-risk-churn.svg",
       description:
         "Predictive models for credit risk scoring and customer churn, tuned to hold up under strict banking regulatory compliance requirements.",
       stack: ["Python", "Logistic Regression", "XGBoost", "SQL"],
@@ -188,6 +195,7 @@ const PORTFOLIO_DATA = {
     {
       title: "Zero-Downtime Database Migration (AWS DMS)",
       tag: "Data Engineering",
+      image: "assets/img/projects/db-migration.svg",
       description:
         "Architected MySQL and PostgreSQL replication pipelines with AWS Database Migration Service, achieving high availability with zero downtime during cutover.",
       stack: ["AWS DMS", "MySQL", "PostgreSQL"],
@@ -195,6 +203,7 @@ const PORTFOLIO_DATA = {
     {
       title: "Executive KPI Dashboards",
       tag: "Banking · BI",
+      image: "assets/img/projects/executive-dashboards.svg",
       description:
         "Interactive, ML-integrated executive dashboards in Power BI that support strategic decision-making across departments at BRAC Bank.",
       stack: ["Power BI", "DAX", "SQL"],
