@@ -299,6 +299,10 @@ section { padding: 96px 0; }
 }
 .card:hover { border-color: var(--accent-2); transform: translateY(-3px); box-shadow: var(--shadow); }
 
+.card-media { padding: 0; overflow: hidden; }
+.project-image { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; display: block; background: var(--bg-elev-2); }
+.card-media .project-card-body { padding: 20px 24px 26px; }
+
 /* ============================================================
    About
    ============================================================ */

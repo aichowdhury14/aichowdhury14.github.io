@@ -104,13 +104,16 @@
     d.projects.forEach((p) => {
       const card = el(
         "div",
-        "card reveal",
+        p.image ? "card card-media reveal" : "card reveal",
         `
-        <span class="project-tag">${p.tag}</span>
-        <div class="project-title">${p.title}</div>
-        <div class="project-desc">${p.description}</div>
-        <div class="chip-row">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>
-        ${p.link ? `<a class="project-link" href="${p.link}" target="_blank" rel="noopener">Read the paper →</a>` : ""}
+        ${p.image ? `<img class="project-image" src="${p.image}" alt="${p.title} screenshot" loading="lazy">` : ""}
+        <div class="project-card-body">
+          <span class="project-tag">${p.tag}</span>
+          <div class="project-title">${p.title}</div>
+          <div class="project-desc">${p.description}</div>
+          <div class="chip-row">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>
+          ${p.link ? `<a class="project-link" href="${p.link}" target="_blank" rel="noopener">${p.linkLabel || "Read the paper"} →</a>` : ""}
+        </div>
       `
       );
       grid.appendChild(card);

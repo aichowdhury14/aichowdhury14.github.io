@@ -126,6 +126,16 @@ const PORTFOLIO_DATA = {
 
   projects: [
     {
+      title: "BD Invest Hub",
+      tag: "Personal Project · FinTech",
+      image: "assets/img/projects/bd-invest-hub.jpg",
+      description:
+        "A live rate-comparison and investment calculator for Bangladeshi savers — tracks 55+ products across 25 institutions (FDR, DPS, Sanchayapatra, Treasury instruments) with tax-aware maturity projections and smart recommendations. Backed by a scheduled scraper pipeline feeding the same database as a manual-entry admin panel, shipped as an installable PWA.",
+      stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "GitHub Actions"],
+      link: "https://bd-invest-hub.vercel.app/",
+      linkLabel: "Visit the live site",
+    },
+    {
       title: "Real-Time Fraud Detection — bKash Transactions",
       tag: "Banking · Fraud & Risk",
       description:
