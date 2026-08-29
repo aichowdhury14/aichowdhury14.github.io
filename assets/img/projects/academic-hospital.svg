@@ -1,0 +1,29 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5eead4"/>
+      <stop offset="100%" stop-color="#7c9cff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="#5eead4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#242b3d"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="#0d1220"/>
+  <rect width="800" height="450" fill="url(#dots)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <rect x="330" y="120" width="140" height="140" rx="16" fill="none" stroke="url(#g)" stroke-width="3"/>
+  <path d="M400 155v70M365 190h70" stroke="url(#g)" stroke-width="7" stroke-linecap="round"/>
+
+  <g transform="translate(590,200)" stroke="#5eead4" stroke-width="2.5" fill="none">
+    <ellipse cx="0" cy="-45" rx="42" ry="14"/>
+    <path d="M-42 -45 V45 A42 14 0 0 0 42 45 V-45"/>
+    <path d="M-42 -10 A42 14 0 0 0 42 -10" opacity="0.6"/>
+  </g>
+
+  <path d="M210 300 h60 l10 -25 l15 45 l10 -30 l10 20 h50" fill="none" stroke="#fb7185" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

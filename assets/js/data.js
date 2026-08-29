@@ -538,15 +538,15 @@ const PORTFOLIO_DATA = {
   ],
 
   academicProjects: [
-    { title: "SAir AIR BD LTD — Official Website", stack: ["HTML", "CSS", "JavaScript", "Python", "Django"] },
-    { title: "Face Encoding with Emotion Recognition", stack: ["Python", "Jupyter Notebook"] },
-    { title: "BMI & CGPA Analysis Based on Personality", stack: ["Python", "Jupyter Notebook"] },
-    { title: "Banking Management System", stack: ["Java", "NetBeans"] },
-    { title: "String Recognizer (Android)", stack: ["Java", "Android Studio"] },
-    { title: "Text to Speech (Android)", stack: ["Java", "Android Studio"] },
-    { title: "Teacher-Student Collaboration System", stack: ["C#", "ASP.NET"] },
-    { title: "Hospital Management System", stack: ["PL/SQL", "XAMPP"] },
-    { title: "Restaurant Management System", stack: ["MySQL", "XAMPP"] },
+    { title: "SAir AIR BD LTD — Official Website", image: "assets/img/projects/academic-website.svg", stack: ["HTML", "CSS", "JavaScript", "Python", "Django"] },
+    { title: "Face Encoding with Emotion Recognition", image: "assets/img/projects/academic-face-encoding.svg", stack: ["Python", "Jupyter Notebook"] },
+    { title: "BMI & CGPA Analysis Based on Personality", image: "assets/img/projects/academic-bmi-cgpa.svg", stack: ["Python", "Jupyter Notebook"] },
+    { title: "Banking Management System", image: "assets/img/projects/academic-banking.svg", stack: ["Java", "NetBeans"] },
+    { title: "String Recognizer (Android)", image: "assets/img/projects/academic-string-recognizer.svg", stack: ["Java", "Android Studio"] },
+    { title: "Text to Speech (Android)", image: "assets/img/projects/academic-text-to-speech.svg", stack: ["Java", "Android Studio"] },
+    { title: "Teacher-Student Collaboration System", image: "assets/img/projects/academic-teacher-student.svg", stack: ["C#", "ASP.NET"] },
+    { title: "Hospital Management System", image: "assets/img/projects/academic-hospital.svg", stack: ["PL/SQL", "XAMPP"] },
+    { title: "Restaurant Management System", image: "assets/img/projects/academic-restaurant.svg", stack: ["MySQL", "XAMPP"] },
   ],
 
   honors: [

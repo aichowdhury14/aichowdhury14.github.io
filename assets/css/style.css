@@ -614,7 +614,7 @@ section { padding: 96px 0; }
 /* ============================================================
    Academic / additional projects (compact grid)
    ============================================================ */
-.mini-project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.mini-project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; align-items: start; }
 .mini-project {
   background: var(--bg-elev-1);
   border: 1px solid var(--border);
@@ -623,18 +623,12 @@ section { padding: 96px 0; }
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .mini-project:hover { border-color: var(--accent-2); transform: translateY(-2px); }
-.mini-project-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.mini-project-icon {
-  width: 34px; height: 34px;
-  flex: none;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 9px;
-  background: var(--bg-elev-2);
-  border: 1px solid var(--border);
-  color: var(--accent-1);
-}
-.mini-project-icon svg { width: 18px; height: 18px; }
-.mini-project-title { font-weight: 650; font-size: 0.92rem; }
+.mini-project-title { font-weight: 650; font-size: 0.92rem; margin-bottom: 10px; }
+
+.mini-project-media { padding: 0; overflow: hidden; }
+.mini-project-image { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; display: block; background: var(--bg-elev-2); }
+.mini-project-media .mini-project-body { padding: 16px 20px 20px; }
+.mini-project-media .mini-project-title { margin-bottom: 10px; }
 
 /* ============================================================
    Certificate badge gallery
