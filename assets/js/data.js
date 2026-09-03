@@ -549,6 +549,16 @@ const PORTFOLIO_DATA = {
     { title: "Restaurant Management System", image: "assets/img/projects/academic-restaurant.svg", stack: ["MySQL", "XAMPP"] },
   ],
 
+  book: {
+    title: "ডেটার রাজ্যে মেশিন লার্নিং এবং এআই",
+    titleEn: "Machine Learning and AI in the Realm of Data",
+    description:
+      "A Bengali-language beginner's guide to data science and machine learning, written for readers starting from zero prior knowledge.",
+    rating: 5,
+    ratingCount: 6,
+    link: "https://www.rokomari.com/book/570822/datar-rajje-machine-learning-ebong-ai?hasEbook=on",
+  },
+
   honors: [
     {
       role: "Data Instructor",

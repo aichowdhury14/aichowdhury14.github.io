@@ -218,6 +218,36 @@
     });
   }
 
+  /* ---------- Published book ---------- */
+  function renderBook() {
+    const wrap = $("#book-highlight");
+    if (!wrap || !d.book) return;
+    const b = d.book;
+    const stars = "★".repeat(b.rating) + "☆".repeat(5 - b.rating);
+    const card = el(
+      "a",
+      "book-card reveal",
+      `
+      <span class="book-icon">📘</span>
+      <div class="book-body">
+        <span class="book-label">Published Book</span>
+        <div class="book-title-bn">${b.title}</div>
+        <div class="book-title-en">${b.titleEn}</div>
+        <p class="book-desc">${b.description}</p>
+        <div class="book-meta">
+          <span class="book-stars">${stars}</span>
+          <span class="book-rating-count">${b.rating.toFixed(1)} · ${b.ratingCount} ratings</span>
+        </div>
+      </div>
+      <span class="book-cta">Get the eBook →</span>
+      `
+    );
+    card.href = b.link;
+    card.target = "_blank";
+    card.rel = "noopener";
+    wrap.appendChild(card);
+  }
+
   /* ---------- Publications (grouped by category) ---------- */
   function renderPublications() {
     const wrap = $("#publications-list");
@@ -511,6 +541,7 @@
     renderSkillChart();
     renderAcademicProjects();
     renderCertificateGallery();
+    renderBook();
     renderPublications();
     renderCertifications();
     renderEduHonors();

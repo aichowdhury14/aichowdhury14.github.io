@@ -612,6 +612,52 @@ section { padding: 96px 0; }
 .pub-group-title:first-child { margin-top: 0; }
 
 /* ============================================================
+   Published book highlight
+   ============================================================ */
+.book-card {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  max-width: 880px;
+  margin-bottom: 32px;
+  padding: 26px 28px;
+  border-radius: var(--radius);
+  background: var(--bg-elev-1);
+  border: 1px solid transparent;
+  background-image: linear-gradient(var(--bg-elev-1), var(--bg-elev-1)), var(--accent-grad);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.book-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.book-icon { font-size: 2.4rem; flex: none; line-height: 1; }
+.book-body { flex: 1 1 auto; min-width: 0; }
+.book-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-1);
+}
+.book-title-bn { font-size: 1.15rem; font-weight: 700; margin-top: 6px; }
+.book-title-en { font-size: 0.85rem; color: var(--text-faint); margin-top: 2px; font-style: italic; }
+.book-desc { font-size: 0.9rem; color: var(--text-dim); margin-top: 10px; max-width: 60ch; }
+.book-meta { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.book-stars { color: #fbbf24; font-size: 0.95rem; letter-spacing: 1px; }
+.book-rating-count { font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-faint); }
+.book-cta {
+  flex: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-2);
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .book-card { flex-direction: column; align-items: flex-start; text-align: left; }
+  .book-cta { margin-top: 6px; }
+}
+
+/* ============================================================
    Academic / additional projects (compact grid)
    ============================================================ */
 .mini-project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; align-items: start; }
