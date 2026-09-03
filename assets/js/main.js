@@ -228,7 +228,7 @@
       "a",
       "book-card reveal",
       `
-      <span class="book-icon">📘</span>
+      <img class="book-cover" src="${b.cover}" alt="${b.titleEn} — book cover">
       <div class="book-body">
         <span class="book-label">Published Book</span>
         <div class="book-title-bn">${b.title}</div>

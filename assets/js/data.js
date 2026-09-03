@@ -552,10 +552,11 @@ const PORTFOLIO_DATA = {
   book: {
     title: "ডেটার রাজ্যে মেশিন লার্নিং এবং এআই",
     titleEn: "Machine Learning and AI in the Realm of Data",
+    cover: "assets/img/book-cover.jpg",
     description:
       "A Bengali-language beginner's guide to data science and machine learning, written for readers starting from zero prior knowledge.",
     rating: 5,
-    ratingCount: 6,
+    ratingCount: 7,
     link: "https://www.rokomari.com/book/570822/datar-rajje-machine-learning-ebong-ai?hasEbook=on",
   },
 
