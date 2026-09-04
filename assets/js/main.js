@@ -98,7 +98,7 @@
     });
   }
 
-  /* ---------- Career & Research Timeline (roles, publications, certifications by year — all real dates already in the data above) ---------- */
+  /* ---------- Career & Research Timeline (roles, publications, certifications, honors by year — all real dates already in the data above) ---------- */
   function renderCareerTimeline() {
     const wrap = $("#career-timeline-chart");
     if (!wrap) return;
@@ -108,33 +108,41 @@
       return m ? parseInt(m[0], 10) : null;
     };
     const currentYear = new Date().getFullYear();
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let rowIndex = 0;
+    const ROW_BASE_STEP = 60;
+    const ITEM_STEP = 12;
+    const ITEM_STEP_CAP = 80;
 
     const roles = d.experience
       .map((job) => ({
         label: `${job.role} · ${job.company}`,
+        company: job.company,
         start: yearOf(job.start),
         end: job.end.trim().toLowerCase() === "present" ? currentYear : yearOf(job.end),
         endLabel: job.end,
+        current: job.end.trim().toLowerCase() === "present",
       }))
       .filter((r) => r.start);
 
-    const pubsByYear = {};
-    d.publications.flatMap((g) => g.items).forEach((p) => {
-      const y = yearOf(p.date);
-      if (y) (pubsByYear[y] = pubsByYear[y] || []).push(p.title);
-    });
-
-    const certsByYear = {};
-    d.certifications.forEach((c) => {
-      const y = yearOf(c.date);
-      if (y) (certsByYear[y] = certsByYear[y] || []).push(c.title);
-    });
+    const bucketByYear = (arr, dateFn, titleFn) => {
+      const map = {};
+      arr.forEach((item) => {
+        const y = yearOf(dateFn(item));
+        if (y) (map[y] = map[y] || []).push(titleFn(item));
+      });
+      return map;
+    };
+    const pubsByYear = bucketByYear(d.publications.flatMap((g) => g.items), (p) => p.date, (p) => p.title);
+    const certsByYear = bucketByYear(d.certifications, (c) => c.date, (c) => c.title);
+    const honorsByYear = bucketByYear(d.honors, (h) => h.date, (h) => h.role + " — " + h.org);
 
     const allYears = [
       ...roles.map((r) => r.start),
       ...roles.map((r) => r.end),
       ...Object.keys(pubsByYear).map(Number),
       ...Object.keys(certsByYear).map(Number),
+      ...Object.keys(honorsByYear).map(Number),
     ];
     const minYear = Math.min(...allYears);
     const maxYear = Math.max(...allYears, currentYear);
@@ -152,43 +160,70 @@
     wrap.appendChild(axis);
 
     function addTooltip(mark, html) {
-      const tip = el("div", "ct-tooltip", html);
-      mark.appendChild(tip);
+      mark.appendChild(el("div", "ct-tooltip", html));
+    }
+    function stagger(elm, itemIndex) {
+      if (reduceMotion) return;
+      elm.classList.add("ct-animate");
+      const delay = rowIndex * ROW_BASE_STEP + Math.min(itemIndex * ITEM_STEP, ITEM_STEP_CAP);
+      elm.style.transitionDelay = delay + "ms";
     }
 
     const rolesRow = el("div", "ct-row", `<div class="ct-row-label">Roles</div><div class="ct-track"></div>`);
     const rolesTrack = rolesRow.querySelector(".ct-track");
-    roles.forEach((r) => {
+    roles.forEach((r, i) => {
       const left = pct(r.start);
       const width = Math.max(pct(r.end) - left, 3);
-      const bar = el("div", "ct-bar ct-bar-role", "");
+      const bar = el("div", "ct-bar ct-bar-role", r.current ? `<span class="ct-bar-label">${r.company}</span>` : "");
       bar.style.left = left + "%";
       bar.style.width = width + "%";
       bar.tabIndex = 0;
       addTooltip(bar, `<strong>${r.label}</strong><br>${r.start} — ${r.endLabel}`);
+      stagger(bar, i);
       rolesTrack.appendChild(bar);
     });
     wrap.appendChild(rolesRow);
+    rowIndex++;
 
     function buildMarkerRow(label, byYear, markClass) {
       const row = el("div", "ct-row", `<div class="ct-row-label">${label}</div><div class="ct-track"></div>`);
       const track = row.querySelector(".ct-track");
-      Object.keys(byYear).forEach((yearStr) => {
-        const year = parseInt(yearStr, 10);
-        const items = byYear[yearStr];
+      const entries = Object.keys(byYear).map((y) => [parseInt(y, 10), byYear[y]]);
+      const peakCount = Math.max(0, ...entries.map(([, items]) => items.length));
+      entries.forEach(([year, items], i) => {
         const size = Math.min(16 + items.length * 2.5, 34);
-        const mark = el("div", `ct-mark ${markClass}`, `<span>${items.length}</span>`);
+        const isPeak = items.length === peakCount && peakCount > 1 && entries.length > 1;
+        const mark = el("div", `ct-mark ${markClass}${isPeak ? " ct-mark-peak" : ""}`, `<span>${items.length}</span>`);
         mark.style.left = pct(year) + "%";
         mark.style.width = size + "px";
         mark.style.height = size + "px";
         mark.tabIndex = 0;
+        if (isPeak) mark.appendChild(el("div", "ct-peak-label", "Peak year"));
         addTooltip(mark, `<strong>${year} (${items.length}):</strong> ${items.join(", ")}`);
+        stagger(mark, i);
         track.appendChild(mark);
       });
       wrap.appendChild(row);
+      rowIndex++;
     }
     buildMarkerRow("Publications", pubsByYear, "ct-mark-pub");
     buildMarkerRow("Certifications", certsByYear, "ct-mark-cert");
+    buildMarkerRow("Honors", honorsByYear, "ct-mark-honor");
+
+    if (!reduceMotion) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("ct-in");
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      obs.observe(wrap);
+    }
   }
 
   /* ---------- Projects ---------- */
