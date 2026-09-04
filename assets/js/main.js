@@ -98,6 +98,99 @@
     });
   }
 
+  /* ---------- Career & Research Timeline (roles, publications, certifications by year — all real dates already in the data above) ---------- */
+  function renderCareerTimeline() {
+    const wrap = $("#career-timeline-chart");
+    if (!wrap) return;
+
+    const yearOf = (str) => {
+      const m = String(str).match(/\d{4}/);
+      return m ? parseInt(m[0], 10) : null;
+    };
+    const currentYear = new Date().getFullYear();
+
+    const roles = d.experience
+      .map((job) => ({
+        label: `${job.role} · ${job.company}`,
+        start: yearOf(job.start),
+        end: job.end.trim().toLowerCase() === "present" ? currentYear : yearOf(job.end),
+        endLabel: job.end,
+      }))
+      .filter((r) => r.start);
+
+    const pubsByYear = {};
+    d.publications.flatMap((g) => g.items).forEach((p) => {
+      const y = yearOf(p.date);
+      if (y) (pubsByYear[y] = pubsByYear[y] || []).push(p.title);
+    });
+
+    const certsByYear = {};
+    d.certifications.forEach((c) => {
+      const y = yearOf(c.date);
+      if (y) (certsByYear[y] = certsByYear[y] || []).push(c.title);
+    });
+
+    const allYears = [
+      ...roles.map((r) => r.start),
+      ...roles.map((r) => r.end),
+      ...Object.keys(pubsByYear).map(Number),
+      ...Object.keys(certsByYear).map(Number),
+    ];
+    const minYear = Math.min(...allYears);
+    const maxYear = Math.max(...allYears, currentYear);
+    const span = maxYear - minYear || 1;
+    const pct = (year) => ((year - minYear) / span) * 100;
+
+    const years = [];
+    for (let y = minYear; y <= maxYear; y++) years.push(y);
+
+    const axis = el(
+      "div",
+      "ct-axis",
+      years.map((y) => `<span class="ct-axis-year" style="left:${pct(y)}%">${y}</span>`).join("")
+    );
+    wrap.appendChild(axis);
+
+    function addTooltip(mark, html) {
+      const tip = el("div", "ct-tooltip", html);
+      mark.appendChild(tip);
+    }
+
+    const rolesRow = el("div", "ct-row", `<div class="ct-row-label">Roles</div><div class="ct-track"></div>`);
+    const rolesTrack = rolesRow.querySelector(".ct-track");
+    roles.forEach((r) => {
+      const left = pct(r.start);
+      const width = Math.max(pct(r.end) - left, 3);
+      const bar = el("div", "ct-bar ct-bar-role", "");
+      bar.style.left = left + "%";
+      bar.style.width = width + "%";
+      bar.tabIndex = 0;
+      addTooltip(bar, `<strong>${r.label}</strong><br>${r.start} — ${r.endLabel}`);
+      rolesTrack.appendChild(bar);
+    });
+    wrap.appendChild(rolesRow);
+
+    function buildMarkerRow(label, byYear, markClass) {
+      const row = el("div", "ct-row", `<div class="ct-row-label">${label}</div><div class="ct-track"></div>`);
+      const track = row.querySelector(".ct-track");
+      Object.keys(byYear).forEach((yearStr) => {
+        const year = parseInt(yearStr, 10);
+        const items = byYear[yearStr];
+        const size = Math.min(16 + items.length * 2.5, 34);
+        const mark = el("div", `ct-mark ${markClass}`, `<span>${items.length}</span>`);
+        mark.style.left = pct(year) + "%";
+        mark.style.width = size + "px";
+        mark.style.height = size + "px";
+        mark.tabIndex = 0;
+        addTooltip(mark, `<strong>${year} (${items.length}):</strong> ${items.join(", ")}`);
+        track.appendChild(mark);
+      });
+      wrap.appendChild(row);
+    }
+    buildMarkerRow("Publications", pubsByYear, "ct-mark-pub");
+    buildMarkerRow("Certifications", certsByYear, "ct-mark-cert");
+  }
+
   /* ---------- Projects ---------- */
   function renderProjects() {
     const grid = $("#project-grid");
@@ -536,6 +629,7 @@
     renderProfile();
     renderAbout();
     renderExperience();
+    renderCareerTimeline();
     renderProjects();
     renderSkills();
     renderSkillChart();
