@@ -405,6 +405,7 @@ section { padding: 96px 0; }
 .career-timeline-title { font-size: 1rem; font-weight: 700; }
 .career-timeline-sub { font-size: 0.8rem; color: var(--text-faint); margin-top: 2px; }
 
+#career-timeline-chart { position: relative; }
 .ct-axis { position: relative; height: 20px; margin-left: 118px; margin-bottom: 6px; }
 .ct-axis-year {
   position: absolute;
@@ -468,19 +469,25 @@ section { padding: 96px 0; }
 .ct-mark-cert { background: var(--accent-3); }
 .ct-mark-honor { background: #fbbf24; }
 
-.ct-mark-peak { box-shadow: 0 0 0 4px rgba(124, 156, 255, 0.25); }
-.ct-peak-label {
+/* Shared crosshair — hovering/focusing any mark or bar draws a vertical guide through every row */
+.ct-guideline-layer {
   position: absolute;
-  bottom: calc(100% + 5px);
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-2);
+  left: 118px;
+  right: 0;
+  top: 26px;
+  bottom: 0;
+  pointer-events: none;
 }
+.ct-guideline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--accent-2);
+  opacity: 0;
+  transition: opacity 0.15s ease, left 0.08s ease;
+}
+.ct-guideline.show { opacity: 0.55; }
 
 /* Entrance animation — bars grow in from the left, marks pop in, staggered via inline transition-delay */
 .ct-bar.ct-animate {
@@ -535,6 +542,7 @@ section { padding: 96px 0; }
 @media (max-width: 640px) {
   .ct-row-label { width: 78px; font-size: 0.72rem; }
   .ct-axis { margin-left: 96px; }
+  .ct-guideline-layer { left: 96px; }
 }
 
 /* ============================================================

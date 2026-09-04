@@ -169,6 +169,22 @@
       elm.style.transitionDelay = delay + "ms";
     }
 
+    // Shared crosshair: hovering/focusing any mark or bar shows a vertical guide
+    // through every row, so you can see what else was happening that same year.
+    const guideLayer = el("div", "ct-guideline-layer", `<div class="ct-guideline"></div>`);
+    const guideline = guideLayer.querySelector(".ct-guideline");
+    function linkCrosshair(elm, leftPct) {
+      const show = () => {
+        guideline.style.left = leftPct + "%";
+        guideline.classList.add("show");
+      };
+      const hide = () => guideline.classList.remove("show");
+      elm.addEventListener("pointerenter", show);
+      elm.addEventListener("pointerleave", hide);
+      elm.addEventListener("focus", show);
+      elm.addEventListener("blur", hide);
+    }
+
     const rolesRow = el("div", "ct-row", `<div class="ct-row-label">Roles</div><div class="ct-track"></div>`);
     const rolesTrack = rolesRow.querySelector(".ct-track");
     roles.forEach((r, i) => {
@@ -180,6 +196,7 @@
       bar.tabIndex = 0;
       addTooltip(bar, `<strong>${r.label}</strong><br>${r.start} — ${r.endLabel}`);
       stagger(bar, i);
+      linkCrosshair(bar, left);
       rolesTrack.appendChild(bar);
     });
     wrap.appendChild(rolesRow);
@@ -189,18 +206,17 @@
       const row = el("div", "ct-row", `<div class="ct-row-label">${label}</div><div class="ct-track"></div>`);
       const track = row.querySelector(".ct-track");
       const entries = Object.keys(byYear).map((y) => [parseInt(y, 10), byYear[y]]);
-      const peakCount = Math.max(0, ...entries.map(([, items]) => items.length));
       entries.forEach(([year, items], i) => {
         const size = Math.min(16 + items.length * 2.5, 34);
-        const isPeak = items.length === peakCount && peakCount > 1 && entries.length > 1;
-        const mark = el("div", `ct-mark ${markClass}${isPeak ? " ct-mark-peak" : ""}`, `<span>${items.length}</span>`);
-        mark.style.left = pct(year) + "%";
+        const mark = el("div", `ct-mark ${markClass}`, `<span>${items.length}</span>`);
+        const left = pct(year);
+        mark.style.left = left + "%";
         mark.style.width = size + "px";
         mark.style.height = size + "px";
         mark.tabIndex = 0;
-        if (isPeak) mark.appendChild(el("div", "ct-peak-label", "Peak year"));
         addTooltip(mark, `<strong>${year} (${items.length}):</strong> ${items.join(", ")}`);
         stagger(mark, i);
+        linkCrosshair(mark, left);
         track.appendChild(mark);
       });
       wrap.appendChild(row);
@@ -209,6 +225,7 @@
     buildMarkerRow("Publications", pubsByYear, "ct-mark-pub");
     buildMarkerRow("Certifications", certsByYear, "ct-mark-cert");
     buildMarkerRow("Honors", honorsByYear, "ct-mark-honor");
+    wrap.appendChild(guideLayer);
 
     if (!reduceMotion) {
       const obs = new IntersectionObserver(
