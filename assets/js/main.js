@@ -159,6 +159,13 @@
     );
     wrap.appendChild(axis);
 
+    const gridlines = el(
+      "div",
+      "ct-gridlines",
+      years.map((y) => `<span class="ct-gridline" style="left:${pct(y)}%"></span>`).join("")
+    );
+    wrap.appendChild(gridlines);
+
     function addTooltip(mark, html) {
       mark.appendChild(el("div", "ct-tooltip", html));
     }

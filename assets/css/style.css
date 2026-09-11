@@ -395,18 +395,28 @@ section { padding: 96px 0; }
    Career & Research Timeline chart
    ============================================================ */
 .career-timeline-card {
+  position: relative;
   background: var(--bg-elev-1);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px 28px 22px;
+  padding: 32px 28px 24px;
   margin-bottom: 40px;
+  box-shadow: var(--shadow);
 }
-.career-timeline-head { margin-bottom: 26px; }
-.career-timeline-title { font-size: 1rem; font-weight: 700; }
-.career-timeline-sub { font-size: 0.8rem; color: var(--text-faint); margin-top: 2px; }
+.career-timeline-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--accent-grad);
+}
+.career-timeline-head { margin-bottom: 30px; }
+.career-timeline-title { font-size: 1.05rem; font-weight: 700; }
+.career-timeline-sub { font-size: 0.8rem; color: var(--text-faint); margin-top: 3px; }
 
 #career-timeline-chart { position: relative; }
-.ct-axis { position: relative; height: 20px; margin-left: 118px; margin-bottom: 6px; }
+.ct-axis { position: relative; height: 20px; margin-left: 118px; margin-bottom: 10px; }
 .ct-axis-year {
   position: absolute;
   transform: translateX(-50%);
@@ -416,13 +426,24 @@ section { padding: 96px 0; }
   color: var(--text-faint);
 }
 
-.ct-row { display: flex; align-items: center; gap: 18px; height: 44px; }
-.ct-row-label { flex: none; width: 100px; font-size: 0.8rem; color: var(--text-dim); }
+.ct-gridlines { position: absolute; left: 118px; right: 0; top: 30px; bottom: 6px; pointer-events: none; }
+.ct-gridline { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--border); opacity: 0.7; }
+
+.ct-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s ease;
+}
+.ct-row:hover { background: color-mix(in srgb, var(--bg-elev-2) 55%, transparent); }
+.ct-row-label { flex: none; width: 100px; font-size: 0.8rem; color: var(--text-dim); padding-left: 4px; }
 .ct-track {
   position: relative;
   flex: 1 1 auto;
   height: 100%;
-  border-top: 1px solid var(--border);
 }
 
 .ct-bar {
@@ -431,12 +452,13 @@ section { padding: 96px 0; }
   transform: translateY(-50%);
   height: 14px;
   border-radius: 7px;
-  background: var(--accent-1);
-  opacity: 0.85;
+  background: var(--accent-grad);
+  opacity: 0.9;
   cursor: default;
-  transition: opacity 0.15s ease;
+  box-shadow: 0 2px 8px -2px rgba(94, 234, 212, 0.35);
+  transition: opacity 0.15s ease, box-shadow 0.15s ease;
 }
-.ct-bar:hover, .ct-bar:focus-visible { opacity: 1; }
+.ct-bar:hover, .ct-bar:focus-visible { opacity: 1; box-shadow: 0 4px 14px -3px rgba(124, 156, 255, 0.5); }
 
 .ct-bar-label {
   position: absolute;
@@ -464,6 +486,12 @@ section { padding: 96px 0; }
   color: #08111a;
   cursor: default;
   border: 2px solid var(--bg-elev-1);
+  box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.15s ease, filter 0.15s ease;
+}
+.ct-mark:hover, .ct-mark:focus-visible {
+  box-shadow: 0 6px 16px -3px rgba(0, 0, 0, 0.45);
+  filter: brightness(1.12);
 }
 .ct-mark-pub { background: var(--accent-2); }
 .ct-mark-cert { background: var(--accent-3); }

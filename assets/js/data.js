@@ -556,7 +556,7 @@ const PORTFOLIO_DATA = {
     description:
       "A Bengali-language beginner's guide to data science and machine learning, written for readers starting from zero prior knowledge.",
     rating: 5,
-    ratingCount: 10,
+    ratingCount: 12,
     link: "https://www.rokomari.com/book/570822/datar-rajje-machine-learning-ebong-ai?hasEbook=on",
   },
 
