@@ -136,6 +136,46 @@ const PORTFOLIO_DATA = {
       linkLabel: "Visit the live site",
     },
     {
+      title: "Bangladesh MFS Market Analysis",
+      tag: "Personal Project · FinTech Analytics",
+      image: "assets/img/projects/mfs-analysis.svg",
+      description:
+        "Time-series forecasting, anomaly detection, and market share estimation across Bangladesh's mobile financial services (bKash, Nagad, Rocket), with a Streamlit dashboard for exploring trends interactively.",
+      stack: ["Python", "Streamlit", "Pandas", "Statsmodels", "Scikit-learn"],
+      link: "https://github.com/aichowdhury14/mfs-analysis",
+      linkLabel: "View on GitHub",
+    },
+    {
+      title: "Fake Medicine Identifier",
+      tag: "Personal Project · Healthcare AI",
+      image: "assets/img/projects/fake-medicine-identifier.svg",
+      description:
+        "Photo-based medicine authenticity checker for Bangladesh — uses Gemini Vision OCR to cross-check packaging against the MedEx drug directory and validate expiry dates, flagging likely counterfeits.",
+      stack: ["Python", "FastAPI", "Gemini Vision", "OCR"],
+      link: "https://github.com/aichowdhury14/fake-medicine-identifier",
+      linkLabel: "View on GitHub",
+    },
+    {
+      title: "Dhaka Traffic Optimizer",
+      tag: "Personal Project · Urban Analytics",
+      image: "assets/img/projects/dhaka-traffic-optimizer.svg",
+      description:
+        "Traffic and transit optimization for Dhaka using real OpenStreetMap road networks and XGBoost-based congestion forecasting, presented through a Next.js dashboard with interactive maps.",
+      stack: ["Next.js", "XGBoost", "OpenStreetMap", "Python"],
+      link: "https://github.com/aichowdhury14/dhaka-traffic-optimizer",
+      linkLabel: "View on GitHub",
+    },
+    {
+      title: "CV–JD Matcher",
+      tag: "Personal Project · NLP Tool",
+      image: "assets/img/projects/cv-jd-matcher.svg",
+      description:
+        "Fully client-side CV-to-job-description matcher combining TF-IDF similarity with a skill taxonomy — no backend, runs entirely in the browser, deployable to Hugging Face Spaces.",
+      stack: ["JavaScript", "TF-IDF", "NLP"],
+      link: "https://github.com/aichowdhury14/cv-jd-matcher",
+      linkLabel: "View on GitHub",
+    },
+    {
       title: "Real-Time Fraud Detection — bKash Transactions",
       tag: "Banking · Fraud & Risk",
       image: "assets/img/projects/fraud-detection.svg",

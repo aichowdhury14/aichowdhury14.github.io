@@ -1,0 +1,38 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5eead4"/>
+      <stop offset="55%" stop-color="#7c9cff"/>
+      <stop offset="100%" stop-color="#b28dff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#7c9cff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#7c9cff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#242b3d"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="#0d1220"/>
+  <rect width="800" height="450" fill="url(#dots)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <rect x="180" y="120" width="150" height="210" rx="8" fill="none" stroke="#3a4358" stroke-width="1.4"/>
+  <line x1="204" y1="160" x2="306" y2="160" stroke="#3a4358" stroke-width="1.2"/>
+  <line x1="204" y1="182" x2="290" y2="182" stroke="#3a4358" stroke-width="1.2"/>
+  <line x1="204" y1="204" x2="300" y2="204" stroke="#3a4358" stroke-width="1.2"/>
+  <line x1="204" y1="240" x2="260" y2="240" stroke="url(#g)" stroke-width="2"/>
+  <line x1="204" y1="262" x2="280" y2="262" stroke="url(#g)" stroke-width="2"/>
+
+  <rect x="470" y="120" width="150" height="210" rx="8" fill="none" stroke="#3a4358" stroke-width="1.4"/>
+  <line x1="494" y1="160" x2="596" y2="160" stroke="#3a4358" stroke-width="1.2"/>
+  <line x1="494" y1="182" x2="580" y2="182" stroke="#3a4358" stroke-width="1.2"/>
+  <line x1="494" y1="240" x2="550" y2="240" stroke="url(#g)" stroke-width="2"/>
+  <line x1="494" y1="262" x2="570" y2="262" stroke="url(#g)" stroke-width="2"/>
+
+  <path d="M330 190 C380 190, 420 190, 470 190" fill="none" stroke="url(#g)" stroke-width="2.6" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <path d="M330 250 C380 250, 420 250, 470 250" fill="none" stroke="url(#g)" stroke-width="2.6" stroke-dasharray="2 7" stroke-linecap="round"/>
+
+  <circle cx="400" cy="220" r="34" fill="none" stroke="#5eead4" stroke-width="2.6"/>
+  <path d="M388 220 L398 231 L416 208" fill="none" stroke="#5eead4" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
