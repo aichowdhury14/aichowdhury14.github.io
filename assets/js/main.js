@@ -251,24 +251,73 @@
   }
 
   /* ---------- Projects ---------- */
-  function renderProjects() {
-    const grid = $("#project-grid");
-    d.projects.forEach((p) => {
-      const card = el(
-        "div",
-        p.image ? "card card-media reveal" : "card reveal",
+  const PROJECT_FILTERS = [
+    ["all", "All"],
+    ["personal", "Personal Projects"],
+    ["banking", "Banking & Fintech"],
+    ["research", "Research & Analytics"],
+  ];
+  const projectCategory = (p) =>
+    p.tag.startsWith("Personal Project") ? "personal" : p.tag.startsWith("Banking") ? "banking" : "research";
+
+  function projectCard(p) {
+    const body = (meta) => `
+      <div class="project-card-body">
+        ${meta}
+        <div class="project-title">${p.title}</div>
+        <div class="project-desc">${p.description}</div>
+        <div class="chip-row">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>
+        ${p.link ? `<a class="project-link" href="${p.link}" target="_blank" rel="noopener">${p.linkLabel || "Read the paper"} →</a>` : ""}
+      </div>`;
+
+    if (p.featured) {
+      return el(
+        "article",
+        "card card-featured reveal",
         `
-        ${p.image ? `<img class="project-image" src="${p.image}" alt="${p.title} screenshot" loading="lazy">` : ""}
-        <div class="project-card-body">
-          <span class="project-tag">${p.tag}</span>
-          <div class="project-title">${p.title}</div>
-          <div class="project-desc">${p.description}</div>
-          <div class="chip-row">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>
-          ${p.link ? `<a class="project-link" href="${p.link}" target="_blank" rel="noopener">${p.linkLabel || "Read the paper"} →</a>` : ""}
-        </div>
+        <a class="browser-frame" href="${p.link}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url">${new URL(p.link).host}</span></div>
+          <img src="${p.image}" alt="" loading="lazy">
+        </a>
+        ${body(`<div class="project-meta"><span class="project-tag">${p.tag}</span><span class="live-badge">Live</span></div>`)}
       `
       );
-      grid.appendChild(card);
+    }
+    return el(
+      "article",
+      p.image ? "card card-media reveal" : "card reveal",
+      `${p.image ? `<img class="project-image" src="${p.image}" alt="${p.title} illustration" loading="lazy">` : ""}
+      ${body(`<span class="project-tag">${p.tag}</span>`)}`
+    );
+  }
+
+  function renderProjects() {
+    const grid = $("#project-grid");
+    const featured = $("#project-featured");
+    const filters = $("#project-filters");
+    const cards = d.projects.map((p) => {
+      const card = projectCard(p);
+      card.dataset.cat = projectCategory(p);
+      (p.featured ? featured : grid).appendChild(card);
+      return card;
+    });
+
+    PROJECT_FILTERS.forEach(([key, label]) => {
+      const count = key === "all" ? cards.length : cards.filter((c) => c.dataset.cat === key).length;
+      if (!count) return;
+      const btn = el("button", "filter-btn", `${label}<span class="filter-count">${count}</span>`);
+      btn.type = "button";
+      btn.setAttribute("aria-pressed", key === "all");
+      btn.addEventListener("click", () => {
+        filters.querySelectorAll(".filter-btn").forEach((b) => b.setAttribute("aria-pressed", b === btn));
+        cards.forEach((c) => {
+          c.hidden = key !== "all" && c.dataset.cat !== key;
+          c.classList.add("in");
+        });
+        featured.hidden = ![...featured.children].some((c) => !c.hidden);
+        grid.hidden = ![...grid.children].some((c) => !c.hidden);
+      });
+      filters.appendChild(btn);
     });
   }
 

@@ -134,6 +134,18 @@ const PORTFOLIO_DATA = {
       stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "GitHub Actions"],
       link: "https://bd-invest-hub.vercel.app/",
       linkLabel: "Visit the live site",
+      featured: true,
+    },
+    {
+      title: "Data Lab · ডেটা ল্যাব",
+      tag: "Personal Project · EdTech",
+      image: "assets/img/projects/data-lab.jpg",
+      description:
+        "A free, bilingual (English & বাংলা) playground for learning data and AI by doing — 18 SQL lessons on a live in-browser SQLite console, a step-by-step data-cleaning pipeline, 8 interactive ML models including RFM segmentation, and 8 AI/LLM labs that open up tokens, attention, RAG and agents. Built on 8 Bangladesh-flavored practice datasets; nothing to install, no sign-up.",
+      stack: ["React", "Vite", "SQLite", "SVG Charts", "Vercel"],
+      link: "https://data-lab-ai.vercel.app/",
+      linkLabel: "Visit the live site",
+      featured: true,
     },
     {
       title: "Bangladesh MFS Market Analysis",
