@@ -14,51 +14,100 @@
   };
 
   /* ---------- Profile / hero / footer / nav brand ---------- */
+  const ICONS = {
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>',
+    github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57l-.02-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.62-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3"/></svg>',
+    scholar: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.24 13.77 0 9.5 12 0l12 9.5-5.24 4.27A7.5 7.5 0 0 0 12 9.5a7.5 7.5 0 0 0-6.76 4.27ZM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z"/></svg>',
+    researchgate: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 16V8h2.5a2 2 0 0 1 0 4H8m2.5 0 2 4M18 9.5a1.8 1.8 0 0 0-3 1.3v2.4a1.8 1.8 0 0 0 3 1.3V12h-1.4"/></svg>',
+    briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>',
+    sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>',
+  };
+
+  const pubCount = () => d.publications.reduce((n, cat) => n + cat.items.length, 0);
+
   function renderProfile() {
-    document.title = `${d.profile.name} — ${d.profile.title}`;
-    $("#brand-name").textContent = d.profile.initials;
-    $("#hero-name").innerHTML = `Hi, I'm <span class="grad">${d.profile.name}</span>`;
-    $("#hero-tagline").textContent = d.profile.tagline;
-    $("#hero-location").textContent = d.profile.location;
-    $("#footer-name").textContent = d.profile.name;
+    const p = d.profile;
+    document.title = `${p.name} — ${p.title}`;
+    $("#brand-name").textContent = p.initials;
+    $("#brand-full").textContent = p.name;
+
+    const parts = p.name.split(" ");
+    const last = parts.pop();
+    $("#hero-name").innerHTML = `${parts.join(" ")} <span class="grad">${last}</span>`;
+    $("#hero-role").textContent = p.title;
+    $("#hero-tagline").textContent = p.tagline;
+    $("#hero-location").textContent = p.location;
+    $("#footer-name").textContent = p.name;
     $("#footer-year").textContent = new Date().getFullYear();
+    $("#footer-note").textContent = `${p.title} · ${p.location}`;
+    $("#resume-link").href = p.resumeFile;
+    $("#contact-cv").href = p.resumeFile;
+    $("#contact-email").href = `mailto:${p.email}`;
 
-    const resumeBtn = $("#resume-link");
-    resumeBtn.href = d.profile.resumeFile;
+    $("#avatar-inner").innerHTML = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}">`
+      : `<span class="avatar-initials">${p.initials}</span>`;
 
-    const avatarInner = $("#avatar-inner");
-    if (d.profile.photo) {
-      avatarInner.innerHTML = `<img src="${d.profile.photo}" alt="${d.profile.name}">`;
-    } else {
-      avatarInner.innerHTML = `<span class="avatar-initials">${d.profile.initials}</span>`;
+    const current = d.experience.find((j) => /present/i.test(j.end));
+    if (current) {
+      $("#hero-current").innerHTML = `<span class="fc-icon">${ICONS.briefcase}</span>
+        <span><span class="fc-label">Currently at</span><span class="fc-value">${current.company}</span></span>`;
     }
+    $("#hero-pubs").innerHTML = `<span class="fc-num">${pubCount()}</span>
+      <span><span class="fc-label">Peer-reviewed</span><span class="fc-value">publications</span></span>`;
 
-    const contactLinks = $("#contact-links");
-    const links = [
-      { label: d.profile.email, href: `mailto:${d.profile.email}`, icon: "✉" },
-      { label: "LinkedIn", href: d.profile.social.linkedin, icon: "in" },
-      { label: "GitHub", href: d.profile.social.github, icon: "◆" },
-      { label: "Google Scholar", href: d.profile.social.scholar, icon: "🎓" },
-      { label: "ResearchGate", href: d.profile.social.researchgate, icon: "◈" },
+    const lastSegment = (url) => new URL(url).pathname.split("/").filter(Boolean).pop();
+    const socials = [
+      { label: "LinkedIn", href: p.social.linkedin, icon: ICONS.linkedin, value: `/in/${lastSegment(p.social.linkedin)}` },
+      { label: "GitHub", href: p.social.github, icon: ICONS.github, value: `@${lastSegment(p.social.github)}` },
+      { label: "Google Scholar", href: p.social.scholar, icon: ICONS.scholar, value: "Citation profile" },
+      { label: "ResearchGate", href: p.social.researchgate, icon: ICONS.researchgate, value: "Research profile" },
     ];
-    links.forEach((l) => {
-      const a = el("a", "contact-link", `<span>${l.icon}</span><span>${l.label}</span>`);
-      a.href = l.href;
+    const heroSocial = $("#hero-social");
+    socials.forEach((s) => {
+      const a = el("a", "social-btn", s.icon);
+      a.href = s.href;
       a.target = "_blank";
       a.rel = "noopener";
+      a.setAttribute("aria-label", s.label);
+      a.title = s.label;
+      heroSocial.appendChild(a);
+    });
+
+    const contactLinks = $("#contact-links");
+    [{ label: "Email", value: p.email, href: `mailto:${p.email}`, icon: ICONS.mail }, ...socials].forEach((l) => {
+      const a = el(
+        "a",
+        "contact-link",
+        `<span class="contact-icon">${l.icon}</span>
+         <span class="contact-text"><span class="contact-label">${l.label}</span><span class="contact-value">${l.value}</span></span>
+         <span class="contact-arrow">${ICONS.arrow}</span>`
+      );
+      a.href = l.href;
+      if (!l.href.startsWith("mailto:")) {
+        a.target = "_blank";
+        a.rel = "noopener";
+      }
       contactLinks.appendChild(a);
     });
   }
 
-  /* ---------- Core stats (shared by hero metrics strip + About stat row) ---------- */
-  function computeStats() {
-    const pubCount = d.publications.reduce((n, cat) => n + cat.items.length, 0);
-    return [
-      { num: `${d.experience.length}+`, label: "Roles across banking, fintech & research" },
-      { num: `${pubCount}`, label: "Published research papers" },
-      { num: `${d.certifications.length}`, label: "Professional certifications" },
-      { num: "8+", label: "Years in applied research" },
+  /* ---------- Hero proof strip ---------- */
+  function renderProof() {
+    const stats = [
+      { num: "6+", label: "Years in data & AI" },
+      { num: `${pubCount()}`, label: "Publications" },
+      { num: `${d.certifications.length}`, label: "Certifications" },
+      { num: `${d.projects.filter((p) => p.featured).length}`, label: "Live products" },
     ];
+    const statRow = $("#stat-row");
+    stats.forEach((s) => statRow.appendChild(el("div", "stat", `<div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div>`)));
+
+    const companies = $("#proof-companies");
+    [...new Set(d.experience.map((j) => j.company))].forEach((c) => companies.appendChild(el("span", "proof-company", c)));
   }
 
   /* ---------- About ---------- */
@@ -66,34 +115,50 @@
     const wrap = $("#about-text");
     d.about.forEach((p) => wrap.appendChild(el("p", "reveal", p)));
 
-    const statRow = $("#stat-row");
-    computeStats().forEach((s) => {
-      statRow.appendChild(el("div", "stat reveal", `<div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div>`));
-    });
-
     if (d.profile.researchInterests) {
       const tagWrap = $("#research-interests");
-      d.profile.researchInterests.forEach((t) => tagWrap.appendChild(el("span", "chip reveal", t)));
+      d.profile.researchInterests.forEach((t) => tagWrap.appendChild(el("span", "chip", t)));
     }
   }
 
   /* ---------- Experience ---------- */
+  const VISIBLE_POINTS = 4;
   function renderExperience() {
     const tl = $("#timeline");
-    d.experience.forEach((job) => {
+    d.experience.forEach((job, i) => {
+      const isCurrent = /present/i.test(job.end);
+      const extra = job.points.length - VISIBLE_POINTS;
       const item = el(
         "div",
-        "timeline-item reveal",
+        `timeline-item reveal${isCurrent ? " is-current" : ""}`,
         `
         <div class="timeline-dot"></div>
-        <div class="timeline-head">
-          <div><span class="timeline-role">${job.role}</span> · <span class="timeline-company">${job.company}</span></div>
-          <div class="timeline-date">${job.start} — ${job.end}</div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <div>
+              <div class="timeline-role">${job.role}</div>
+              <div class="timeline-meta"><span class="timeline-company">${job.company}</span><span class="timeline-loc">${job.location}</span></div>
+            </div>
+            <div class="timeline-date">${isCurrent ? '<span class="now-badge">Current</span>' : ""}${job.start} — ${job.end}</div>
+          </div>
+          <ul class="timeline-points" id="tl-points-${i}">${job.points
+            .map((p, k) => `<li${k >= VISIBLE_POINTS ? " hidden" : ""}>${p}</li>`)
+            .join("")}</ul>
+          ${extra > 0 ? `<button class="tl-more" type="button" aria-expanded="false" aria-controls="tl-points-${i}">Show ${extra} more</button>` : ""}
         </div>
-        <div class="timeline-loc">${job.location}</div>
-        <ul class="timeline-points">${job.points.map((p) => `<li>${p}</li>`).join("")}</ul>
       `
       );
+      const btn = item.querySelector(".tl-more");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const open = btn.getAttribute("aria-expanded") !== "true";
+          item.querySelectorAll(".timeline-points li").forEach((li, k) => {
+            if (k >= VISIBLE_POINTS) li.hidden = !open;
+          });
+          btn.setAttribute("aria-expanded", String(open));
+          btn.textContent = open ? "Show less" : `Show ${extra} more`;
+        });
+      }
       tl.appendChild(item);
     });
   }
@@ -338,84 +403,21 @@
 
   function renderSkills() {
     const grid = $("#skills-grid");
+    const total = d.skills.reduce((n, s) => n + s.items.length, 0);
+    $("#skills-sub").textContent = `${d.skills.length} areas, ${total} tools and technologies — from classical ML to production data platforms.`;
     d.skills.forEach((s) => {
       const icon = SKILL_ICONS[s.category] || "";
       const card = el(
         "div",
-        "card reveal",
+        "card skill-card reveal",
         `<div class="skill-card-head">
            <span class="skill-card-icon">${icon}</span>
            <span class="skill-card-title">${s.category}</span>
+           <span class="skill-count" aria-label="${s.items.length} tools">${s.items.length}</span>
          </div>
          <div class="skill-tags">${s.items.map((i) => `<span class="skill-tag">${i}</span>`).join("")}</div>`
       );
       grid.appendChild(card);
-    });
-  }
-
-  /* ---------- Skill chart: tool count per category (single-hue magnitude bars) ---------- */
-  function renderSkillChart() {
-    const wrap = $("#skill-chart-wrap");
-    const tableBody = $("#skill-chart-table-body");
-    const toggle = $("#skill-chart-toggle");
-    const table = $("#skill-chart-table");
-    if (!wrap || !tableBody || !toggle) return;
-
-    const maxCount = Math.max(...d.skills.map((s) => s.items.length));
-
-    d.skills.forEach((s) => {
-      const pct = (s.items.length / maxCount) * 100;
-      const row = document.createElement("div");
-      row.className = "chart-row";
-      row.tabIndex = 0;
-
-      const label = document.createElement("div");
-      label.className = "chart-row-label";
-      label.textContent = s.category;
-
-      const track = document.createElement("div");
-      track.className = "chart-row-track";
-      const fill = document.createElement("div");
-      fill.className = "chart-row-fill";
-      fill.style.width = pct + "%";
-      track.appendChild(fill);
-
-      const value = document.createElement("div");
-      value.className = "chart-row-value";
-      value.textContent = String(s.items.length);
-
-      const tooltip = document.createElement("div");
-      tooltip.className = "chart-tooltip";
-      const strong = document.createElement("strong");
-      strong.textContent = `${s.category} (${s.items.length}): `;
-      tooltip.appendChild(strong);
-      tooltip.appendChild(document.createTextNode(s.items.join(", ")));
-      track.appendChild(tooltip);
-
-      row.appendChild(label);
-      row.appendChild(track);
-      row.appendChild(value);
-      wrap.appendChild(row);
-
-      const tr = document.createElement("tr");
-      const tdCat = document.createElement("td");
-      tdCat.textContent = s.category;
-      const tdCount = document.createElement("td");
-      tdCount.textContent = String(s.items.length);
-      const tdList = document.createElement("td");
-      tdList.textContent = s.items.join(", ");
-      tr.appendChild(tdCat);
-      tr.appendChild(tdCount);
-      tr.appendChild(tdList);
-      tableBody.appendChild(tr);
-    });
-
-    toggle.addEventListener("click", () => {
-      const showingTable = !table.hidden;
-      table.hidden = showingTable;
-      wrap.hidden = !showingTable;
-      toggle.textContent = showingTable ? "View as table" : "View as chart";
-      toggle.setAttribute("aria-pressed", String(!showingTable));
     });
   }
 
@@ -453,7 +455,7 @@
   function renderPublications() {
     const wrap = $("#publications-list");
     d.publications.forEach((group) => {
-      wrap.appendChild(el("h3", "pub-group-title reveal", group.category));
+      wrap.appendChild(el("h3", "pub-group-title reveal", `${group.category}<span class="pub-count">${group.items.length}</span>`));
       group.items.forEach((p) => {
         const item = el(
           "a",
@@ -653,7 +655,7 @@
     function updateIcon() {
       const current = document.documentElement.getAttribute("data-theme") ||
         (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      btn.textContent = current === "dark" ? "☀" : "☾";
+      btn.innerHTML = current === "dark" ? ICONS.sun : ICONS.moon;
     }
   }
 
@@ -713,34 +715,15 @@
     items.forEach((i) => obs.observe(i));
   }
 
-  function setupTyping() {
-    const el = $("#hero-role-typed");
-    if (!el) return;
-    const roles = [d.profile.title, "Building Production ML Systems", "Fraud & Risk Modeling", "Generative AI / LLMs"];
-    let ri = 0, ci = 0, deleting = false;
-
-    function tick() {
-      const full = roles[ri];
-      el.textContent = deleting ? full.slice(0, ci--) : full.slice(0, ci++);
-      let delay = deleting ? 28 : 45;
-
-      if (!deleting && ci > full.length) { deleting = true; delay = 1400; }
-      else if (deleting && ci < 0) { deleting = false; ri = (ri + 1) % roles.length; ci = 0; delay = 300; }
-
-      setTimeout(tick, delay);
-    }
-    tick();
-  }
-
   /* ---------- Init ---------- */
   document.addEventListener("DOMContentLoaded", () => {
     renderProfile();
+    renderProof();
     renderAbout();
     renderExperience();
     renderCareerTimeline();
     renderProjects();
     renderSkills();
-    renderSkillChart();
     renderAcademicProjects();
     renderCertificateGallery();
     renderBook();
@@ -751,6 +734,5 @@
     setupTheme();
     setupReveal();
     setupCountUp();
-    setupTyping();
   });
 })();
