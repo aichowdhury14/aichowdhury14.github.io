@@ -21,6 +21,7 @@
   --accent-link: #8fa9ff;
   --live: #4ade80;
   --grid-line: rgba(255, 255, 255, 0.045);
+  --band: rgba(255, 255, 255, 0.022);
 
   --radius: 16px;
   --radius-sm: 8px;
@@ -47,6 +48,7 @@
     --accent-link: #3b4fd1;
     --live: #15803d;
     --grid-line: rgba(22, 32, 64, 0.06);
+    --band: rgba(30, 45, 90, 0.04);
   }
 }
 :root[data-theme="light"] {
@@ -65,6 +67,7 @@
   --accent-link: #3b4fd1;
   --live: #15803d;
   --grid-line: rgba(22, 32, 64, 0.06);
+  --band: rgba(30, 45, 90, 0.04);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -329,35 +332,46 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 .social-btn:hover { color: var(--text); border-color: var(--accent-2); transform: translateY(-2px); }
 
 .hero-visual { display: flex; justify-content: center; }
-.avatar-wrap { position: relative; width: min(340px, 78vw); }
+.avatar-wrap { position: relative; width: min(360px, 80vw); aspect-ratio: 1 / 1.06; }
 .avatar-wrap::before {
   content: "";
   position: absolute;
-  inset: 8%;
+  inset: 24% 4% 0;
   border-radius: 40px;
   background: var(--accent-grad);
-  filter: blur(48px);
-  opacity: 0.35;
+  filter: blur(50px);
+  opacity: 0.4;
   z-index: -1;
 }
-.avatar-ring {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 36px;
+.avatar-blob {
+  position: absolute;
+  inset: 20% 0 0 0;
+  border-radius: 40px;
   background: var(--accent-grad);
-  padding: 3px;
+  overflow: hidden;
   box-shadow: var(--shadow);
 }
-.avatar-inner {
-  width: 100%; height: 100%;
-  border-radius: 33px;
-  background: var(--bg-elev-1);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-  position: relative;
+.avatar-blob::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1.6px);
+  background-size: 16px 16px;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 65%);
+  mask-image: linear-gradient(180deg, #000, transparent 65%);
 }
-.avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
-.avatar-initials { font-family: var(--font-mono); font-size: 4.5rem; font-weight: 700; color: var(--text-faint); }
+.avatar-blob::after {
+  content: "";
+  position: absolute;
+  width: 75%;
+  aspect-ratio: 1;
+  right: -22%;
+  top: -30%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+.avatar-clip { position: absolute; inset: 0; border-radius: 0 0 40px 40px; overflow: hidden; }
+.avatar-cutout { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; }
 
 .float-card {
   position: absolute;
@@ -375,7 +389,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 }
 .float-card:empty { display: none; }
 .float-current { left: -40px; bottom: 30px; }
-.float-pubs { right: -32px; top: 30px; padding-left: 14px; }
+.float-pubs { right: -32px; top: 30%; padding-left: 14px; }
 .fc-icon {
   width: 36px; height: 36px;
   display: grid; place-items: center;
@@ -388,7 +402,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 .fc-label { display: block; font-size: 0.68rem; color: var(--text-faint); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
 .fc-value { display: block; font-size: 0.86rem; font-weight: 700; }
 @media (max-width: 1100px) { .float-current { left: -16px; } .float-pubs { right: -12px; } }
-@media (max-width: 900px) { .avatar-wrap { width: min(280px, 72vw); } }
+@media (max-width: 900px) { .avatar-wrap { width: min(300px, 72vw); } }
 @media (max-width: 420px) { .float-pubs { display: none; } .float-current { left: 50%; transform: translateX(-50%); bottom: -22px; } }
 
 .hero-proof {
@@ -440,31 +454,129 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 .card-media .project-card-body { padding: 20px 24px 26px; }
 
 /* ============================================================
-   About
+   About (bento grid)
    ============================================================ */
-.about-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: start; }
-@media (max-width: 900px) { .about-layout { grid-template-columns: 1fr; } }
-
-.about-grid {
+.bento {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  max-width: 760px;
-  position: relative;
-  padding-left: 26px;
-  border-left: 3px solid transparent;
-  border-image: var(--accent-grad) 1 100%;
+  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    "intro intro role loc"
+    "intro intro focus focus"
+    "code code book interests";
 }
-.about-grid p { color: var(--text-dim); font-size: 1.02rem; line-height: 1.75; }
-.about-grid p:first-child {
-  font-size: 1.22rem;
-  line-height: 1.6;
-  color: var(--text);
-  font-weight: 500;
-  letter-spacing: -0.01em;
+.bento-intro { grid-area: intro; }
+.bento-role { grid-area: role; }
+.bento-location { grid-area: loc; }
+.bento-focus { grid-area: focus; }
+.bento-code { grid-area: code; }
+.bento-book { grid-area: book; }
+.bento-interests { grid-area: interests; }
+@media (max-width: 1000px) {
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "intro intro" "role loc" "focus focus" "code code" "book interests";
+  }
+}
+@media (max-width: 600px) {
+  .bento { grid-template-columns: 1fr; grid-template-areas: "intro" "role" "loc" "focus" "code" "book" "interests"; }
 }
 
-.interests { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; }
+.bento-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-1);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.bento-tile:hover { border-color: color-mix(in srgb, var(--accent-2) 55%, var(--border)); box-shadow: var(--shadow); }
+.bento-label { font: 600 0.68rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 14px; }
+.bento-big { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
+.bento-sub { color: var(--text-dim); font-size: 0.9rem; margin-top: 4px; }
+.bento-meta { margin-top: auto; padding-top: 14px; font: 0.74rem var(--font-mono); color: var(--text-faint); }
+
+.bento-intro { padding: 30px 32px; }
+.bento-intro-text { display: flex; flex-direction: column; gap: 14px; }
+.bento-intro-text p { color: var(--text-dim); font-size: 1rem; line-height: 1.75; }
+.bento-intro-text .bento-lead { font-size: clamp(1.15rem, 1.8vw, 1.35rem); line-height: 1.5; font-weight: 600; letter-spacing: -0.015em; color: var(--text); }
+.bento-intro .tl-more { align-self: flex-start; margin-top: auto; padding-top: 18px; }
+@media (max-width: 600px) { .bento-intro { padding: 24px; } }
+
+.bento-role { background: radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 60%), var(--bg-elev-1); }
+.bento-role .bento-big { padding-right: 46px; }
+.bento-corner-icon {
+  position: absolute; top: 20px; right: 20px;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: var(--accent-grad);
+  color: #08111a;
+}
+.bento-corner-icon svg { width: 18px; height: 18px; }
+
+.bento-location {
+  min-height: 190px;
+  background:
+    linear-gradient(to top, var(--bg-elev-1) 40%, transparent),
+    radial-gradient(color-mix(in srgb, var(--text-faint) 40%, transparent) 1px, transparent 1.6px) 0 0 / 14px 14px,
+    var(--bg-elev-1);
+}
+.bento-location .bento-big { margin-top: auto; }
+.loc-pin { position: absolute; top: 28px; right: 32px; width: 16px; height: 16px; }
+.loc-pin span {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: var(--accent-grad);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-2) 25%, transparent);
+}
+.loc-pin::before, .loc-pin::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--accent-2);
+  opacity: 0;
+}
+
+.focus-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; flex: 1; }
+.focus-item {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+}
+.focus-icon {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: var(--accent-grad);
+  color: #08111a;
+}
+.focus-icon svg { width: 19px; height: 19px; }
+.focus-name { display: block; font-weight: 700; font-size: 0.95rem; letter-spacing: -0.01em; }
+.focus-detail { display: block; margin-top: 4px; font-size: 0.8rem; line-height: 1.45; color: var(--text-dim); }
+@media (max-width: 600px) { .focus-item { flex-direction: row; align-items: flex-start; } .focus-icon { flex: none; } }
+
+.bento-code { padding: 0; }
+.bento-code .terminal-body { flex: 1; font-size: 0.78rem; }
+
+.bento-book { color: inherit; min-height: 190px; }
+.bento-book > :not(img) { position: relative; max-width: calc(100% - 64px); }
+.bento-book-title { font-weight: 700; font-size: 1.02rem; line-height: 1.45; }
+.bento-book .bento-meta { margin-top: 12px; padding-top: 0; }
+.bento-book-cover {
+  position: absolute;
+  right: 22px; bottom: -26px;
+  width: 112px;
+  border-radius: 6px;
+  transform: rotate(8deg);
+  box-shadow: 0 14px 28px -10px rgba(0, 0, 0, 0.55);
+  transition: transform 0.3s ease;
+}
+.bento-book:hover .bento-book-cover { transform: rotate(3deg) translateY(-6px); }
 
 /* ============================================================
    Terminal code snippet card
@@ -475,8 +587,6 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
-  position: sticky;
-  top: 100px;
 }
 .terminal-titlebar {
   display: flex;
@@ -1222,3 +1332,48 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--text
 }
 .to-top.show { opacity: 1; pointer-events: auto; }
 .to-top:hover { transform: translateY(-3px); }
+
+/* ============================================================
+   Alternating section bands
+   ============================================================ */
+.section-band {
+  background: linear-gradient(180deg, transparent, var(--band) 140px, var(--band) calc(100% - 140px), transparent);
+}
+
+/* ============================================================
+   Mouse-follow spotlight on cards
+   ============================================================ */
+.card, .timeline-card, .list-item, .talk-featured { position: relative; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card::after, .bento-tile::after, .timeline-card::after, .list-item::after, .talk-featured::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent-2) 13%, transparent), transparent 60%);
+  }
+  .card:hover::after, .bento-tile:hover::after, .timeline-card:hover::after, .list-item:hover::after, .talk-featured:hover::after { opacity: 1; }
+}
+
+/* ============================================================
+   Ambient motion (only when the visitor allows motion)
+   ============================================================ */
+@keyframes float-y { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@keyframes grad-shift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+@keyframes border-shift { from { background-position: 0 0, 0% 50%; } to { background-position: 0 0, 100% 50%; } }
+@keyframes contact-border-shift { from { background-position: 0 0, 0 0, 0 0, 0% 50%; } to { background-position: 0 0, 0 0, 0 0, 100% 50%; } }
+@keyframes ping { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(3.2); opacity: 0; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .float-current { animation: float-y 6s ease-in-out infinite; }
+  .float-pubs { animation: float-y 6s ease-in-out -3s infinite; }
+  .hero h1 .grad { background-size: 200% 100%; animation: grad-shift 7s ease-in-out infinite alternate; }
+  .card-featured::before { background-size: 200% 100%; animation: grad-shift 5s ease-in-out infinite alternate; }
+  .talk-featured { background-size: 100% 100%, 300% 300%; animation: border-shift 6s ease-in-out infinite alternate; }
+  .contact-panel { background-size: auto, auto, 100% 100%, 300% 300%; animation: contact-border-shift 7s ease-in-out infinite alternate; }
+  .loc-pin::before { animation: ping 2.4s ease-out infinite; }
+  .loc-pin::after { animation: ping 2.4s ease-out 1.2s infinite; }
+}

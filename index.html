@@ -105,9 +105,8 @@
         </div>
         <div class="hero-visual">
           <div class="avatar-wrap">
-            <div class="avatar-ring">
-              <div class="avatar-inner" id="avatar-inner"></div>
-            </div>
+            <div class="avatar-blob" aria-hidden="true"></div>
+            <div class="avatar-clip"><img class="avatar-cutout" id="avatar-img" alt=""></div>
             <div class="float-card float-current" id="hero-current"></div>
             <div class="float-card float-pubs" id="hero-pubs"></div>
           </div>
@@ -130,15 +129,24 @@
         <span class="section-eyebrow">About</span>
         <h2 class="section-title">A Quick Introduction</h2>
       </div>
-      <div class="about-layout">
-        <div>
-          <div class="about-grid" id="about-text"></div>
-          <div class="interests reveal">
-            <span class="proof-label">Research interests</span>
-            <div class="chip-row" id="research-interests"></div>
-          </div>
-        </div>
-        <div class="terminal-card reveal">
+      <div class="bento">
+        <article class="bento-tile bento-intro reveal">
+          <span class="bento-label">Hello</span>
+          <div class="bento-intro-text" id="about-text"></div>
+          <button class="tl-more" id="about-toggle" type="button" aria-expanded="false">Read more</button>
+        </article>
+        <article class="bento-tile bento-role reveal" id="bento-role"></article>
+        <article class="bento-tile bento-location reveal">
+          <span class="bento-label">Based in</span>
+          <div class="loc-pin" aria-hidden="true"><span></span></div>
+          <div class="bento-big" id="bento-city"></div>
+          <div class="bento-sub" id="bento-time"></div>
+        </article>
+        <article class="bento-tile bento-focus reveal">
+          <span class="bento-label">Focus areas</span>
+          <div class="focus-list" id="focus-list"></div>
+        </article>
+        <article class="bento-tile bento-code terminal-card reveal">
           <div class="terminal-titlebar">
             <span class="terminal-dot red"></span>
             <span class="terminal-dot yellow"></span>
@@ -158,13 +166,18 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
 <span class="tok-kw">if</span> risk > THRESHOLD:
     <span class="tok-fn">flag_for_review</span>(txn, risk)</pre>
           <div class="terminal-status"><span class="pulse"></span> running in production · BRAC Bank</div>
-        </div>
+        </article>
+        <a class="bento-tile bento-book reveal" id="bento-book" target="_blank" rel="noopener"></a>
+        <article class="bento-tile bento-interests reveal">
+          <span class="bento-label">Research interests</span>
+          <div class="chip-row" id="research-interests"></div>
+        </article>
       </div>
     </div>
   </section>
 
   <!-- EXPERIENCE -->
-  <section id="experience">
+  <section id="experience" class="section-band">
     <div class="container">
       <div class="section-head reveal">
         <span class="section-eyebrow">Experience</span>
@@ -205,7 +218,7 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
   </section>
 
   <!-- TALKS & TEACHING -->
-  <section id="talks">
+  <section id="talks" class="section-band">
     <div class="container">
       <div class="section-head reveal">
         <span class="section-eyebrow">Talks &amp; Teaching</span>
@@ -230,7 +243,7 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
   </section>
 
   <!-- ACADEMIC PROJECTS -->
-  <section id="academic-projects">
+  <section id="academic-projects" class="section-band">
     <div class="container">
       <div class="section-head reveal">
         <span class="section-eyebrow">From University</span>
@@ -255,7 +268,7 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
   </section>
 
   <!-- CERTIFICATIONS -->
-  <section id="certifications">
+  <section id="certifications" class="section-band">
     <div class="container">
       <div class="section-head reveal">
         <span class="section-eyebrow">Credentials</span>

@@ -16,7 +16,12 @@ const PORTFOLIO_DATA = {
     location: "Dhaka, Bangladesh",
     email: "a.i.shovan10@gmail.com",
     phone: "+8801766999954",
-    photo: "assets/img/profile.jpg",
+    photo: "assets/img/profile-cutout.webp",
+    focusAreas: [
+      { name: "Artificial Intelligence", detail: "Generative AI, LLMs, deep learning and computer vision" },
+      { name: "Data Analytics", detail: "Dashboards, BI and data storytelling that drive decisions" },
+      { name: "Predictive Modeling", detail: "Fraud, credit risk, churn and demand forecasting in production" },
+    ],
     social: {
       linkedin: "https://www.linkedin.com/in/atiqulislamchowdhury/",
       github: "https://github.com/aichowdhury14",

@@ -71,9 +71,9 @@
     $("#footer-note").textContent = `${p.title} · ${p.location}`;
     $("#contact-email").href = `mailto:${p.email}`;
 
-    $("#avatar-inner").innerHTML = p.photo
-      ? `<img src="${p.photo}" alt="${p.name}">`
-      : `<span class="avatar-initials">${p.initials}</span>`;
+    const avatar = $("#avatar-img");
+    avatar.src = p.photo;
+    avatar.alt = p.name;
 
     const current = d.experience.find((j) => /present/i.test(j.end));
     if (current) {
@@ -135,14 +135,72 @@
   }
 
   /* ---------- About ---------- */
-  function renderAbout() {
-    const wrap = $("#about-text");
-    d.about.forEach((p) => wrap.appendChild(el("p", "reveal", p)));
+  const FOCUS_ICONS = [
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8Z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8Z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+  ];
 
-    if (d.profile.researchInterests) {
-      const tagWrap = $("#research-interests");
-      d.profile.researchInterests.forEach((t) => tagWrap.appendChild(el("span", "chip", t)));
+  function renderAbout() {
+    const p = d.profile;
+    const wrap = $("#about-text");
+    const LEAD = 2;
+    const extra = d.about.slice(LEAD).map((t) => {
+      const para = el("p", "", t);
+      para.hidden = true;
+      return para;
+    });
+    d.about.slice(0, LEAD).forEach((t, i) => wrap.appendChild(el("p", i === 0 ? "bento-lead" : "", t)));
+    extra.forEach((para) => wrap.appendChild(para));
+    const toggle = $("#about-toggle");
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") !== "true";
+      extra.forEach((para) => (para.hidden = !open));
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.textContent = open ? "Show less" : "Read more";
+    });
+
+    const current = d.experience.find((j) => /present/i.test(j.end));
+    if (current) {
+      $("#bento-role").innerHTML = `
+        <span class="bento-label">Currently</span>
+        <span class="bento-corner-icon">${ICONS.briefcase}</span>
+        <div class="bento-big">${current.company}</div>
+        <div class="bento-sub">${current.role}</div>
+        <div class="bento-meta">Since ${current.start}</div>`;
     }
+
+    $("#bento-city").textContent = p.location;
+    const timeEl = $("#bento-time");
+    const fmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Dhaka", hour: "numeric", minute: "2-digit" });
+    const tick = () => (timeEl.textContent = `${fmt.format(new Date())} local time · GMT+6`);
+    tick();
+    setInterval(tick, 30000);
+
+    const focus = $("#focus-list");
+    p.focusAreas.forEach((f, i) =>
+      focus.appendChild(
+        el(
+          "div",
+          "focus-item",
+          `<span class="focus-icon">${FOCUS_ICONS[i % FOCUS_ICONS.length]}</span>
+           <span><span class="focus-name">${f.name}</span><span class="focus-detail">${f.detail}</span></span>`
+        )
+      )
+    );
+
+    const b = d.book;
+    const book = $("#bento-book");
+    book.href = b.link;
+    book.innerHTML = `
+      <img class="bento-book-cover" src="${b.cover}" alt="${b.titleEn} — book cover" loading="lazy">
+      <span class="bento-label">Author</span>
+      <div class="bento-book-title">${b.title}</div>
+      <div class="bento-sub">${b.titleEn}</div>
+      <div class="bento-meta"><span class="book-stars">${"★".repeat(b.rating)}</span> ${b.rating.toFixed(1)} · ${b.ratingCount} ratings</div>`;
+
+    const tagWrap = $("#research-interests");
+    p.researchInterests.forEach((t) => tagWrap.appendChild(el("span", "chip", t)));
   }
 
   /* ---------- Experience ---------- */
@@ -792,19 +850,41 @@
   }
 
   function setupReveal() {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const items = document.querySelectorAll(".reveal");
     const obs = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in");
-            obs.unobserve(entry.target);
-          }
-        });
+        entries
+          .filter((entry) => entry.isIntersecting)
+          .forEach((entry, i) => {
+            const target = entry.target;
+            // Stagger items that enter together; clear the delay afterwards so hover transitions stay instant.
+            const delay = reduceMotion ? 0 : Math.min(i * 80, 400);
+            target.style.transitionDelay = `${delay}ms`;
+            target.classList.add("in");
+            setTimeout(() => (target.style.transitionDelay = ""), delay + 700);
+            obs.unobserve(target);
+          });
       },
       { threshold: 0.12 }
     );
     items.forEach((i) => obs.observe(i));
+  }
+
+  function setupSpotlight() {
+    if (!window.matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) return;
+    const SEL = ".card, .bento-tile, .timeline-card, .list-item, .talk-featured";
+    document.addEventListener(
+      "pointermove",
+      (e) => {
+        const target = e.target.closest(SEL);
+        if (!target) return;
+        const r = target.getBoundingClientRect();
+        target.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        target.style.setProperty("--my", `${e.clientY - r.top}px`);
+      },
+      { passive: true }
+    );
   }
 
   /* ---------- Init ---------- */
@@ -826,6 +906,7 @@
     setupNav();
     setupTheme();
     setupReveal();
+    setupSpotlight();
     setupCountUp();
   });
 })();
