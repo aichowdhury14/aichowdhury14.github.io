@@ -54,8 +54,8 @@ Each badge appears the moment its file exists at that path. To add more later, a
 
 > Housekeeping: the original `certificates/` folder (the source PDFs/images you dropped at the project root) is safe to delete — everything from it has been copied into `assets/certificates/` and `assets/img/certificates/` under clean filenames. Keep it only if you want a backup.
 
-### Your CV
-Your PDF is already copied to `assets/resume/Atiqul-Islam-Chowdhury-CV.pdf` and the "Download CV" button links to it. Replace that file any time you update your CV — same filename, or update the path in `data.js` → `profile.resumeFile`.
+### Talks, teaching & recognition
+Edit `engagements` in `data.js`. Each entry has a `type` (Teaching, Talk, Press, Judge, Milestone), title, org, date, description and link. The entry with `featured: true` gets the large card; the rest show newest-first.
 
 ### The "currently in production" code snippet
 The terminal-style code card in the About section (`fraud_detection.py`) is static HTML in `index.html`, not data-driven — it's a representative illustration of your BRAC Bank work, not literal production code. To change it, edit the `<pre class="terminal-body">` block directly (search for `fraud_detection.py` in `index.html`).

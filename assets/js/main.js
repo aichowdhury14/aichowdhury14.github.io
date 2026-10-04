@@ -24,7 +24,33 @@
     arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>',
     sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
     moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>',
+    teaching: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5Z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></svg>',
+    talk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8"/></svg>',
+    press: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h13v16H6a2 2 0 0 1-2-2Z"/><path d="M17 8h3v10a2 2 0 0 1-2 2M8 8h5M8 12h5M8 16h3"/></svg>',
+    judge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>',
+    milestone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></svg>',
   };
+
+  /* ---------- "Show all / Show fewer" for long lists ---------- */
+  function makeCollapsible(container, extra, collapsedLabel) {
+    if (!extra.length) return;
+    const wrap = el("div", "show-more-wrap");
+    const btn = el("button", "show-more");
+    btn.type = "button";
+    const set = (open) => {
+      extra.forEach((item) => (item.hidden = !open));
+      btn.setAttribute("aria-expanded", String(open));
+      btn.textContent = open ? "Show fewer" : collapsedLabel;
+    };
+    btn.addEventListener("click", () => {
+      const open = btn.getAttribute("aria-expanded") !== "true";
+      set(open);
+      if (!open && container.getBoundingClientRect().top < 0) container.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    set(false);
+    wrap.appendChild(btn);
+    container.after(wrap);
+  }
 
   const pubCount = () => d.publications.reduce((n, cat) => n + cat.items.length, 0);
 
@@ -43,8 +69,6 @@
     $("#footer-name").textContent = p.name;
     $("#footer-year").textContent = new Date().getFullYear();
     $("#footer-note").textContent = `${p.title} · ${p.location}`;
-    $("#resume-link").href = p.resumeFile;
-    $("#contact-cv").href = p.resumeFile;
     $("#contact-email").href = `mailto:${p.email}`;
 
     $("#avatar-inner").innerHTML = p.photo
@@ -163,7 +187,7 @@
     });
   }
 
-  /* ---------- Career & Research Timeline (roles, publications, certifications, honors by year — all real dates already in the data above) ---------- */
+  /* ---------- Career & Research Timeline (roles, publications, certifications, talks by year — all real dates already in the data above) ---------- */
   function renderCareerTimeline() {
     const wrap = $("#career-timeline-chart");
     if (!wrap) return;
@@ -200,14 +224,14 @@
     };
     const pubsByYear = bucketByYear(d.publications.flatMap((g) => g.items), (p) => p.date, (p) => p.title);
     const certsByYear = bucketByYear(d.certifications, (c) => c.date, (c) => c.title);
-    const honorsByYear = bucketByYear(d.honors, (h) => h.date, (h) => h.role + " — " + h.org);
+    const talksByYear = bucketByYear(d.engagements.filter((e) => e.type !== "Milestone"), (e) => e.date, (e) => e.title);
 
     const allYears = [
       ...roles.map((r) => r.start),
       ...roles.map((r) => r.end),
       ...Object.keys(pubsByYear).map(Number),
       ...Object.keys(certsByYear).map(Number),
-      ...Object.keys(honorsByYear).map(Number),
+      ...Object.keys(talksByYear).map(Number),
     ];
     const minYear = Math.min(...allYears);
     const maxYear = Math.max(...allYears, currentYear);
@@ -296,7 +320,7 @@
     }
     buildMarkerRow("Publications", pubsByYear, "ct-mark-pub");
     buildMarkerRow("Certifications", certsByYear, "ct-mark-cert");
-    buildMarkerRow("Honors", honorsByYear, "ct-mark-honor");
+    buildMarkerRow("Talks", talksByYear, "ct-mark-honor");
     wrap.appendChild(guideLayer);
 
     if (!reduceMotion) {
@@ -356,6 +380,7 @@
     );
   }
 
+  const PROJECT_LIMIT = 6;
   function renderProjects() {
     const grid = $("#project-grid");
     const featured = $("#project-featured");
@@ -367,6 +392,40 @@
       return card;
     });
 
+    const moreWrap = el("div", "show-more-wrap");
+    const moreBtn = el("button", "show-more");
+    moreBtn.type = "button";
+    moreWrap.appendChild(moreBtn);
+    grid.after(moreWrap);
+
+    let current = "all";
+    let expanded = false;
+    function apply(userAction) {
+      let inGrid = 0;
+      let overflow = 0;
+      cards.forEach((c) => {
+        const match = current === "all" || c.dataset.cat === current;
+        let show = match;
+        if (match && c.parentElement === grid && ++inGrid > PROJECT_LIMIT) {
+          overflow++;
+          show = expanded;
+        }
+        c.hidden = !show;
+        if (userAction) c.classList.add("in");
+      });
+      featured.hidden = !cards.some((c) => c.parentElement === featured && !c.hidden);
+      grid.hidden = !cards.some((c) => c.parentElement === grid && !c.hidden);
+      moreWrap.hidden = overflow === 0;
+      moreBtn.setAttribute("aria-expanded", String(expanded));
+      moreBtn.textContent = expanded ? "Show fewer projects" : `Show ${overflow} more projects`;
+    }
+
+    moreBtn.addEventListener("click", () => {
+      expanded = !expanded;
+      apply(true);
+      if (!expanded && grid.getBoundingClientRect().top < 0) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
     PROJECT_FILTERS.forEach(([key, label]) => {
       const count = key === "all" ? cards.length : cards.filter((c) => c.dataset.cat === key).length;
       if (!count) return;
@@ -375,14 +434,52 @@
       btn.setAttribute("aria-pressed", key === "all");
       btn.addEventListener("click", () => {
         filters.querySelectorAll(".filter-btn").forEach((b) => b.setAttribute("aria-pressed", b === btn));
-        cards.forEach((c) => {
-          c.hidden = key !== "all" && c.dataset.cat !== key;
-          c.classList.add("in");
-        });
-        featured.hidden = ![...featured.children].some((c) => !c.hidden);
-        grid.hidden = ![...grid.children].some((c) => !c.hidden);
+        current = key;
+        expanded = false;
+        apply(true);
       });
       filters.appendChild(btn);
+    });
+    apply(false);
+  }
+
+  /* ---------- Talks, teaching & recognition ---------- */
+  function renderTalks() {
+    const featuredWrap = $("#talks-featured");
+    const grid = $("#talks-grid");
+    const badge = (type) => `<span class="talk-type talk-${type.toLowerCase()}"><span class="talk-icon">${ICONS[type.toLowerCase()] || ""}</span>${type}</span>`;
+    const linkOut = (e) =>
+      e.link ? `<a class="talk-link" href="${e.link}" target="_blank" rel="noopener">${e.linkLabel || "View"} <span aria-hidden="true">↗</span></a>` : "";
+
+    d.engagements.forEach((e) => {
+      if (e.featured) {
+        featuredWrap.appendChild(
+          el(
+            "article",
+            "talk-featured reveal",
+            `<div class="talk-featured-body">
+               <div class="talk-top">${badge(e.type)}<span class="talk-date">${e.date}</span></div>
+               <h3 class="talk-featured-title">${e.title}</h3>
+               <div class="talk-org">${e.org}</div>
+               <p class="talk-desc">${e.description}</p>
+               ${linkOut(e)}
+             </div>
+             ${e.stats ? `<div class="talk-stats">${e.stats.map(([n, l]) => `<div class="talk-stat"><span class="talk-stat-num">${n}</span><span class="talk-stat-label">${l}</span></div>`).join("")}</div>` : ""}`
+          )
+        );
+        return;
+      }
+      grid.appendChild(
+        el(
+          "article",
+          "card talk-card reveal",
+          `<div class="talk-top">${badge(e.type)}<span class="talk-date">${e.date}</span></div>
+           <h3 class="talk-title">${e.title}</h3>
+           <div class="talk-org">${e.org}</div>
+           <p class="talk-desc">${e.description}</p>
+           ${linkOut(e)}`
+        )
+      );
     });
   }
 
@@ -452,11 +549,13 @@
   }
 
   /* ---------- Publications (grouped by category) ---------- */
+  const PUBS_PER_GROUP = 2;
   function renderPublications() {
     const wrap = $("#publications-list");
+    const extra = [];
     d.publications.forEach((group) => {
       wrap.appendChild(el("h3", "pub-group-title reveal", `${group.category}<span class="pub-count">${group.items.length}</span>`));
-      group.items.forEach((p) => {
+      group.items.forEach((p, i) => {
         const item = el(
           "a",
           "list-item reveal",
@@ -474,9 +573,11 @@
         item.href = p.link;
         item.target = "_blank";
         item.rel = "noopener";
+        if (i >= PUBS_PER_GROUP) extra.push(item);
         wrap.appendChild(item);
       });
     });
+    makeCollapsible(wrap, extra, `Show all ${pubCount()} publications`);
   }
 
   /* ---------- Certificate badge gallery (auto-hides missing images) ---------- */
@@ -519,7 +620,7 @@
   function renderAcademicProjects() {
     const wrap = $("#academic-projects-grid");
     if (!wrap || !d.academicProjects) return;
-    d.academicProjects.forEach((p) => {
+    const items = d.academicProjects.map((p) =>
       wrap.appendChild(
         el(
           "div",
@@ -532,14 +633,15 @@
           </div>
           `
         )
-      );
-    });
+      )
+    );
+    makeCollapsible(wrap, items.slice(4), `Show all ${items.length} projects`);
   }
 
   /* ---------- Certifications ---------- */
   function renderCertifications() {
     const wrap = $("#certifications-list");
-    d.certifications.forEach((c) => {
+    const items = d.certifications.map((c) => {
       const isLocalPdf = !c.link.startsWith("http");
       const item = el(
         "a",
@@ -559,34 +661,23 @@
       item.target = "_blank";
       item.rel = "noopener";
       wrap.appendChild(item);
+      return item;
     });
+    makeCollapsible(wrap, items.slice(6), `Show all ${items.length} certifications`);
   }
 
-  /* ---------- Education & Honors ---------- */
-  function renderEduHonors() {
-    const eduWrap = $("#education-list");
+  /* ---------- Education ---------- */
+  function renderEducation() {
+    const wrap = $("#education-list");
     d.education.forEach((e) => {
-      eduWrap.appendChild(
+      wrap.appendChild(
         el(
           "div",
-          "mini-item reveal",
-          `<div class="mini-item-title">${e.degree}</div>
+          "card edu-card reveal",
+          `<div class="mini-item-meta">${e.date}</div>
+           <div class="mini-item-title">${e.degree}</div>
            <div class="mini-item-org">${e.school}</div>
-           <div class="mini-item-meta">${e.date}</div>
            ${e.detail ? `<div class="mini-item-detail">${e.detail}</div>` : ""}`
-        )
-      );
-    });
-
-    const honorsWrap = $("#honors-list");
-    d.honors.forEach((h) => {
-      honorsWrap.appendChild(
-        el(
-          "div",
-          "mini-item reveal",
-          `<div class="mini-item-title">${h.role}</div>
-           <div class="mini-item-org">${h.org}</div>
-           <div class="mini-item-meta">${h.date} · ${h.location}</div>`
         )
       );
     });
@@ -723,13 +814,14 @@
     renderExperience();
     renderCareerTimeline();
     renderProjects();
+    renderTalks();
     renderSkills();
     renderAcademicProjects();
     renderCertificateGallery();
     renderBook();
     renderPublications();
     renderCertifications();
-    renderEduHonors();
+    renderEducation();
     setupNav();
     setupTheme();
     setupReveal();
