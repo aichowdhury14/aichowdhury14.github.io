@@ -620,6 +620,9 @@ const PORTFOLIO_DATA = {
       title: "Data Instructor — Data Analytics Career Bootcamp",
       org: "Human Development Network Bangladesh (HDNB)",
       date: "Jul 2024 – Present",
+      image: "assets/img/hdnb-bootcamp-faculty.jpg",
+      imageAlt:
+        "HDNB Data Analytics Career Bootcamp faculty: Md. Taimur Islam (City Bank), Atiqul Islam Chowdhury (BRAC Bank), Mobussira Tazrin Saima (Next Ventures), Kazi Jubair Radin (ACI) and Md Rahat Anwar Khan (ASA International)",
       description:
         "Faculty member on a live, mentor-led bootcamp that takes aspiring analysts from foundations through Excel, SQL, Python and Power BI to a job-ready portfolio. I teach the career-readiness classes: building a data analyst portfolio, CV and LinkedIn refinement, and interview preparation.",
       stats: [

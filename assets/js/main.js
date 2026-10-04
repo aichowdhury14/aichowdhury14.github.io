@@ -457,14 +457,15 @@
           el(
             "article",
             "talk-featured reveal",
-            `<div class="talk-featured-body">
+            `${e.image ? `<div class="talk-media"><img src="${e.image}" alt="${e.imageAlt || ""}" loading="lazy"></div>` : ""}
+             <div class="talk-featured-body">
                <div class="talk-top">${badge(e.type)}<span class="talk-date">${e.date}</span></div>
                <h3 class="talk-featured-title">${e.title}</h3>
                <div class="talk-org">${e.org}</div>
                <p class="talk-desc">${e.description}</p>
+               ${e.stats ? `<div class="talk-stats">${e.stats.map(([n, l]) => `<div class="talk-stat"><span class="talk-stat-num">${n}</span><span class="talk-stat-label">${l}</span></div>`).join("")}</div>` : ""}
                ${linkOut(e)}
-             </div>
-             ${e.stats ? `<div class="talk-stats">${e.stats.map(([n, l]) => `<div class="talk-stat"><span class="talk-stat-num">${n}</span><span class="talk-stat-label">${l}</span></div>`).join("")}</div>` : ""}`
+             </div>`
           )
         );
         return;
