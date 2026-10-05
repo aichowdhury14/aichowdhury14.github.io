@@ -409,7 +409,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
   -webkit-backdrop-filter: blur(10px);
   overflow: hidden;
 }
-.proof-stats { display: grid; grid-template-columns: repeat(3, 1fr); }
+.proof-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
 .stat { padding: 24px 26px; border-right: 1px solid var(--border); }
 .stat-num { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1.1; }
 .stat-label { font-size: 0.8rem; color: var(--text-faint); margin-top: 4px; }
@@ -422,7 +422,10 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
   .stat:last-child { border-right: 0; }
 }
 @media (max-width: 600px) {
-  .stat { padding: 18px 16px; }
+  .proof-stats { grid-template-columns: repeat(2, 1fr); }
+  .stat { padding: 18px 20px; }
+  .stat:nth-child(2n) { border-right: 0; }
+  .stat:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
   .stat-num { font-size: 1.6rem; }
 }
 
@@ -548,6 +551,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 .bento-book-title { font-weight: 700; font-size: 1.02rem; line-height: 1.45; }
 .bento-book .bento-meta { margin-top: 12px; padding-top: 0; }
 .bento-book-cover {
+  height: auto;
   position: absolute;
   right: 22px; bottom: -26px;
   width: 112px;
@@ -1078,6 +1082,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 }
 .book-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .book-cover {
+  height: auto;
   width: 88px;
   flex: none;
   border-radius: 6px;

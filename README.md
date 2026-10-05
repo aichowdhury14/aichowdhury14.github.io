@@ -1,6 +1,6 @@
 # Atiqul Islam Chowdhury — Portfolio
 
-A free, self-hosted portfolio site for Data Science / AI work. Pure HTML/CSS/JS — no build step, no framework, no paid hosting.
+A free, self-hosted portfolio site for Data Science / AI work. Pure HTML/CSS/JS — no framework, no paid hosting. One optional script (`npm run prerender`) bakes the content into `index.html` for search engines.
 
 **Live at:** `https://aichowdhury14.github.io` (once deployed — see below)
 
@@ -16,25 +16,35 @@ You never need to touch HTML or CSS for normal updates. Open **`assets/js/data.j
 
 | To do this...                       | Edit this array in `data.js` |
 |--------------------------------------|-------------------------------|
-| Add a new job                        | `experience` — copy an existing block, paste at the top |
+| Add a new job                        | `experience` — copy an existing block, paste at the top (set `logoMark` to a square logo in `assets/img/logos/`) |
 | Add a project                        | `projects` |
-| Add an academic/personal project     | `academicProjects` |
+| Add an academic project (shown under Projects) | `academicProjects` |
+| Add a talk, press mention or milestone | `engagements` |
+| Change the three focus areas         | `profile.focusAreas` |
 | Add a certification                  | `certifications` |
 | Add a publication                    | `publications` (grouped by type — pick the right group) |
 | Update skills                        | `skills` — **keep each category to 10 items or fewer** (see below) |
 | Change bio, tagline, email, links    | `profile` and `about` |
 | Add/change research interest tags    | `profile.researchInterests` |
 
-Save the file, refresh `index.html` in your browser to check it, then commit + push (see §4) to go live. That's the entire update workflow — forever.
+Save the file, refresh `index.html` in your browser to check it, then refresh the search-engine snapshot and push:
 
-### The "Toolkit Breadth by Category" chart updates itself
-The interactive bar chart in the Skills section (hover/focus a bar for the full tool list, or click "View as table") is 100% computed from the `skills` array — bar length is just `items.length` per category. Add or remove a skill and the chart, tooltip, and table all update automatically. **Keep each category at ≤10 items** so the chart and cards stay readable — if a category grows past that, split it into two categories instead of stacking more tags in one.
+```powershell
+npm install          # once
+npm run prerender    # after any content change
+git add . ; git commit -m "Update content" ; git push
+```
+
+Visitors always see the latest `data.js` even if you skip `npm run prerender` — the snapshot only affects what search engines and AI crawlers read.
+
+### Skills
+Each skill category card shows a tool count computed from the `skills` array. Keep each category at 10 items or fewer so the cards stay readable.
 
 ### Your photo
-Already wired in at `assets/img/profile.jpg` (referenced by `data.js` → `profile.photo`). Replace that file with a new square photo any time — no code changes needed.
+The hero uses a background-removed cut-out: `assets/img/profile-cutout.webp` (880px) and `profile-cutout-480.webp` (for phones), referenced by `profile.photo` / `profile.photoSmall` in `data.js`. To change the photo, replace both files with transparent-background square images of the same names.
 
 ### Certifications — backed by real files
-Most of the 12 certifications link to an actual PDF hosted in `assets/certificates/` (no dependency on third-party "verify" links that can break or require login) — except the 3 that only ever had an external link (HackerRank SQL x2, one DataCamp share link).
+Most of the certifications link to an actual PDF hosted in `assets/certificates/` (no dependency on third-party "verify" links that can break or require login) — except the 3 that only ever had an external link (HackerRank SQL x2, one DataCamp share link).
 
 ### Certificate badge gallery
 There's also a visual badge gallery below the Certifications list, driven by `certificateGallery` in `data.js`. It's **hidden automatically until an image exists** — no code changes needed either way.
@@ -61,7 +71,9 @@ Edit `engagements` in `data.js`. Each entry has a `type` (Teaching, Talk, Press,
 The terminal-style code card in the About section (`fraud_detection.py`) is static HTML in `index.html`, not data-driven — it's a representative illustration of your BRAC Bank work, not literal production code. To change it, edit the `<pre class="terminal-body">` block directly (search for `fraud_detection.py` in `index.html`).
 
 ### SEO / link-preview metadata
-When this link is shared (LinkedIn, email, Slack), it now shows a branded preview card instead of a blank one. If your name, title, or key stats change meaningfully, regenerate `assets/img/og-image.png` (1200×630) to match, and update the `<meta property="og:*">` tags and the JSON-LD block at the top of `index.html`'s `<head>`. Not required for routine content edits — only if your headline identity changes.
+- **Link preview:** `assets/img/og-image.png` (1200×630) is the card shown when the link is shared on LinkedIn, WhatsApp, Slack, etc. Regenerate it if your headline, photo or key stats change.
+- **Prerendered content:** `tools/prerender.mjs` opens the page in headless Chrome and saves the rendered HTML between the `<!-- prerender:start -->` / `<!-- prerender:end -->` markers in `index.html`, so crawlers that don't run JavaScript still see everything. On load, `main.js` clears that snapshot and renders fresh from `data.js`.
+- **Structured data:** the `Person` block in `<head>` is hand-written; the Book and all publications (`ScholarlyArticle`) are generated from `data.js` into `#structured-data` automatically.
 
 ---
 
@@ -140,20 +152,24 @@ You'll still want Git eventually — editing `data.js` in the GitHub web editor 
 ## Project structure
 ```
 aichowdhury14.github.io/
-├─ index.html                    ← page structure (rarely needs edits)
+├─ index.html                    ← page structure + prerendered snapshot (regenerated by the script)
 ├─ robots.txt                    ← lets search engines crawl the site
 ├─ sitemap.xml                   ← basic SEO indexability
+├─ package.json                  ← `npm run prerender` (dev tooling only)
+├─ tools/prerender.mjs           ← bakes rendered content into index.html
 ├─ assets/
 │  ├─ css/style.css              ← visual design (dark/light theme, tokens at the top)
 │  ├─ js/data.js                 ← ALL your content — edit this to update the site
 │  ├─ js/main.js                 ← rendering + interactions (rarely needs edits)
 │  ├─ img/
-│  │  ├─ profile.jpg             ← your photo
+│  │  ├─ profile-cutout*.webp    ← your photo (cut-out, 880px + 480px)
+│  │  ├─ logos/                  ← employer logo marks (square, 96px)
+│  │  ├─ projects/               ← project thumbnails
 │  │  ├─ favicon.svg / favicon-32.png / apple-touch-icon.png
 │  │  ├─ og-image.png            ← social share preview card
 │  │  └─ certificates/           ← certificate badge images (gallery)
 │  ├─ certificates/               ← certification PDFs (linked from the Certifications list)
-│  └─ resume/                    ← your downloadable CV PDF
+│  └─ resume/                    ← CV PDF (no longer linked from the site)
 ├─ .gitignore
 └─ README.md                     ← this file
 ```

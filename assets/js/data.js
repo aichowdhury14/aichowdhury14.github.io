@@ -17,6 +17,7 @@ const PORTFOLIO_DATA = {
     email: "a.i.shovan10@gmail.com",
     phone: "+8801766999954",
     photo: "assets/img/profile-cutout.webp",
+    photoSmall: "assets/img/profile-cutout-480.webp",
     focusAreas: [
       { name: "Artificial Intelligence", detail: "Generative AI, LLMs, deep learning and computer vision" },
       { name: "Data Analytics", detail: "Dashboards, BI and data storytelling that drive decisions" },
@@ -614,7 +615,7 @@ const PORTFOLIO_DATA = {
   book: {
     title: "ডেটার রাজ্যে মেশিন লার্নিং এবং এআই",
     titleEn: "Machine Learning and AI in the Realm of Data",
-    cover: "assets/img/book-cover.jpg",
+    cover: "assets/img/book-cover.webp",
     description:
       "A Bengali-language beginner's guide to data science and machine learning, written for readers starting from zero prior knowledge.",
     rating: 5,

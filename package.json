@@ -1,0 +1,11 @@
+{
+  "name": "aichowdhury14-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prerender": "node tools/prerender.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}

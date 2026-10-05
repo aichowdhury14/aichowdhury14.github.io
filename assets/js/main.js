@@ -34,6 +34,7 @@
   function makeCollapsible(container, extra, collapsedLabel) {
     if (!extra.length) return;
     const wrap = el("div", "show-more-wrap");
+    wrap.dataset.js = "";
     const btn = el("button", "show-more");
     btn.type = "button";
     const set = (open) => {
@@ -72,11 +73,12 @@
 
     const avatar = $("#avatar-img");
     avatar.src = p.photo;
+    avatar.srcset = `${p.photoSmall} 480w, ${p.photo} 880w`;
     avatar.alt = p.name;
 
     const current = d.experience.find((j) => /present/i.test(j.end));
     if (current) {
-      $("#hero-current").innerHTML = `<span class="logo-tile fc-logo"><img src="${current.logoMark}" alt=""></span>
+      $("#hero-current").innerHTML = `<span class="logo-tile fc-logo"><img src="${current.logoMark}" alt="" width="96" height="96"></span>
         <span><span class="fc-label">Currently at</span><span class="fc-value">${current.company}</span></span>`;
     }
     $("#hero-pubs").innerHTML = `<span class="fc-num">${pubCount()}</span>
@@ -124,6 +126,7 @@
       { num: "6+", label: "Years in data & AI" },
       { num: `${pubCount()}`, label: "Publications" },
       { num: "15+", label: "Certifications" },
+      { num: "5+", label: "Banking AI/ML projects" },
     ];
     const statRow = $("#stat-row");
     stats.forEach((s) => statRow.appendChild(el("div", "stat", `<div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div>`)));
@@ -134,7 +137,7 @@
       if (seen.has(j.company)) return;
       seen.add(j.company);
       companies.appendChild(
-        el("span", "proof-company", `<span class="logo-tile proof-mark"><img src="${j.logoMark}" alt=""></span>${j.company}`)
+        el("span", "proof-company", `<span class="logo-tile proof-mark"><img src="${j.logoMark}" alt="" width="96" height="96"></span>${j.company}`)
       );
     });
   }
@@ -169,7 +172,7 @@
     if (current) {
       $("#bento-role").innerHTML = `
         <span class="bento-label">Currently</span>
-        <span class="logo-tile bento-corner-logo"><img src="${current.logoMark}" alt=""></span>
+        <span class="logo-tile bento-corner-logo"><img src="${current.logoMark}" alt="" width="96" height="96" loading="lazy"></span>
         <div class="bento-big">${current.company}</div>
         <div class="bento-sub">${current.role}</div>
         <div class="bento-meta">Since ${current.start}</div>`;
@@ -198,7 +201,7 @@
     const book = $("#bento-book");
     book.href = b.link;
     book.innerHTML = `
-      <img class="bento-book-cover" src="${b.cover}" alt="${b.titleEn} — book cover" loading="lazy">
+      <img class="bento-book-cover" src="${b.cover}" alt="${b.titleEn} — book cover" width="240" height="339" loading="lazy">
       <span class="bento-label">Author</span>
       <div class="bento-book-title">${b.title}</div>
       <div class="bento-sub">${b.titleEn}</div>
@@ -223,7 +226,7 @@
         <div class="timeline-card">
           <div class="timeline-head">
             <div class="timeline-title">
-              <span class="logo-tile tl-logo"><img src="${job.logoMark}" alt="${job.company} logo" loading="lazy"></span>
+              <span class="logo-tile tl-logo"><img src="${job.logoMark}" alt="${job.company} logo" width="96" height="96" loading="lazy"></span>
               <div>
               <div class="timeline-role">${job.role}</div>
               <div class="timeline-meta"><span class="timeline-company">${job.company}</span><span class="timeline-loc">${job.location}</span></div>
@@ -391,6 +394,7 @@
 
     // Phones get a vertical year-by-year list instead of the compressed horizontal chart.
     const mobile = el("ol", "ct-mobile");
+    mobile.dataset.js = "";
     for (let y = maxYear; y >= minYear; y--) {
       const started = roles.filter((r) => r.start === y);
       const counts = [
@@ -488,6 +492,7 @@
     });
 
     const moreWrap = el("div", "show-more-wrap");
+    moreWrap.dataset.js = "";
     const moreBtn = el("button", "show-more");
     moreBtn.type = "button";
     moreWrap.appendChild(moreBtn);
@@ -624,7 +629,7 @@
       "a",
       "book-card reveal",
       `
-      <img class="book-cover" src="${b.cover}" alt="${b.titleEn} — book cover">
+      <img class="book-cover" src="${b.cover}" alt="${b.titleEn} — book cover" width="240" height="339" loading="lazy">
       <div class="book-body">
         <span class="book-label">Published Book</span>
         <div class="book-title-bn">${b.title}</div>
@@ -924,8 +929,50 @@
     );
   }
 
+  /* ---------- Structured data (publications + book) for search engines ---------- */
+  const MONTHS = { Jan: "01", Feb: "02", Mar: "03", Apr: "04", May: "05", Jun: "06", Jul: "07", Aug: "08", Sep: "09", Oct: "10", Nov: "11", Dec: "12" };
+  const isoDate = (s) => {
+    const m = String(s).match(/(?:([A-Z][a-z]{2})\s+)?(\d{4})/);
+    return m ? (m[1] && MONTHS[m[1]] ? `${m[2]}-${MONTHS[m[1]]}` : m[2]) : undefined;
+  };
+
+  function renderStructuredData() {
+    const author = { "@id": "https://aichowdhury14.github.io/#person" };
+    const graph = [
+      {
+        "@type": "Book",
+        name: d.book.title,
+        alternateName: d.book.titleEn,
+        inLanguage: "bn",
+        author,
+        description: d.book.description,
+        url: d.book.link,
+        image: `https://aichowdhury14.github.io/${d.book.cover}`,
+      },
+      ...d.publications.flatMap((group) =>
+        group.items.map((p) => ({
+          "@type": "ScholarlyArticle",
+          name: p.title,
+          author,
+          datePublished: isoDate(p.date),
+          isPartOf: { "@type": "CreativeWork", name: p.venue },
+          genre: group.category,
+          url: p.link,
+        }))
+      ),
+    ];
+    $("#structured-data").textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+  }
+
+  // index.html ships a prerendered snapshot for crawlers; clear it so the live render below is the only copy.
+  function resetPrerender() {
+    document.querySelectorAll("[data-js]").forEach((n) => n.remove());
+    document.querySelectorAll("[data-render]").forEach((n) => n.replaceChildren());
+  }
+
   /* ---------- Init ---------- */
   document.addEventListener("DOMContentLoaded", () => {
+    resetPrerender();
     renderProfile();
     renderProof();
     renderAbout();
@@ -940,6 +987,7 @@
     renderPublications();
     renderCertifications();
     renderEducation();
+    renderStructuredData();
     setupNav();
     setupTheme();
     setupReveal();
