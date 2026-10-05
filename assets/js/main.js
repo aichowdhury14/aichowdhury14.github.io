@@ -20,7 +20,6 @@
     github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57l-.02-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.62-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3"/></svg>',
     scholar: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.24 13.77 0 9.5 12 0l12 9.5-5.24 4.27A7.5 7.5 0 0 0 12 9.5a7.5 7.5 0 0 0-6.76 4.27ZM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z"/></svg>',
     researchgate: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 16V8h2.5a2 2 0 0 1 0 4H8m2.5 0 2 4M18 9.5a1.8 1.8 0 0 0-3 1.3v2.4a1.8 1.8 0 0 0 3 1.3V12h-1.4"/></svg>',
-    briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>',
     arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>',
     sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
     moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>',
@@ -77,7 +76,7 @@
 
     const current = d.experience.find((j) => /present/i.test(j.end));
     if (current) {
-      $("#hero-current").innerHTML = `<span class="fc-icon">${ICONS.briefcase}</span>
+      $("#hero-current").innerHTML = `<span class="logo-tile fc-logo"><img src="${current.logoMark}" alt=""></span>
         <span><span class="fc-label">Currently at</span><span class="fc-value">${current.company}</span></span>`;
     }
     $("#hero-pubs").innerHTML = `<span class="fc-num">${pubCount()}</span>
@@ -131,7 +130,14 @@
     stats.forEach((s) => statRow.appendChild(el("div", "stat", `<div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div>`)));
 
     const companies = $("#proof-companies");
-    [...new Set(d.experience.map((j) => j.company))].forEach((c) => companies.appendChild(el("span", "proof-company", c)));
+    const seen = new Set();
+    d.experience.forEach((j) => {
+      if (seen.has(j.company)) return;
+      seen.add(j.company);
+      companies.appendChild(
+        el("span", "proof-company", `<span class="logo-tile proof-mark"><img src="${j.logoMark}" alt=""></span>${j.company}`)
+      );
+    });
   }
 
   /* ---------- About ---------- */
@@ -164,7 +170,7 @@
     if (current) {
       $("#bento-role").innerHTML = `
         <span class="bento-label">Currently</span>
-        <span class="bento-corner-icon">${ICONS.briefcase}</span>
+        <span class="logo-tile bento-corner-logo"><img src="${current.logoMark}" alt=""></span>
         <div class="bento-big">${current.company}</div>
         <div class="bento-sub">${current.role}</div>
         <div class="bento-meta">Since ${current.start}</div>`;
@@ -217,9 +223,12 @@
         <div class="timeline-dot"></div>
         <div class="timeline-card">
           <div class="timeline-head">
-            <div>
+            <div class="timeline-title">
+              <span class="logo-tile tl-logo"><img src="${job.logoMark}" alt="${job.company} logo" loading="lazy"></span>
+              <div>
               <div class="timeline-role">${job.role}</div>
               <div class="timeline-meta"><span class="timeline-company">${job.company}</span><span class="timeline-loc">${job.location}</span></div>
+              </div>
             </div>
             <div class="timeline-date">${isCurrent ? '<span class="now-badge">Current</span>' : ""}${job.start} — ${job.end}</div>
           </div>

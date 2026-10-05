@@ -391,14 +391,6 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 .float-card:empty { display: none; }
 .float-current { left: -40px; bottom: 30px; }
 .float-pubs { right: -32px; top: 30%; padding-left: 14px; }
-.fc-icon {
-  width: 36px; height: 36px;
-  display: grid; place-items: center;
-  border-radius: 11px;
-  background: var(--accent-grad);
-  color: #08111a;
-}
-.fc-icon svg { width: 18px; height: 18px; }
 .fc-num { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; }
 .fc-label { display: block; font-size: 0.68rem; color: var(--text-faint); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
 .fc-value { display: block; font-size: 0.86rem; font-weight: 700; }
@@ -423,8 +415,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 .stat-label { font-size: 0.8rem; color: var(--text-faint); margin-top: 4px; }
 .proof-companies { padding: 22px 28px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
 .proof-label { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); }
-.proof-logos { display: flex; flex-wrap: wrap; gap: 6px 20px; }
-.proof-company { font-weight: 700; font-size: 0.92rem; letter-spacing: -0.01em; color: var(--text-dim); }
+.proof-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 @media (max-width: 960px) {
   .hero-proof { grid-template-columns: 1fr; }
   .proof-companies { border-top: 1px solid var(--border); }
@@ -508,16 +499,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 @media (max-width: 600px) { .bento-intro { padding: 24px; } }
 
 .bento-role { background: radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 60%), var(--bg-elev-1); }
-.bento-role .bento-big { padding-right: 46px; }
-.bento-corner-icon {
-  position: absolute; top: 20px; right: 20px;
-  width: 38px; height: 38px;
-  display: grid; place-items: center;
-  border-radius: 12px;
-  background: var(--accent-grad);
-  color: #08111a;
-}
-.bento-corner-icon svg { width: 18px; height: 18px; }
+.bento-role .bento-big { padding-right: 56px; }
 
 .bento-location {
   min-height: 190px;
@@ -1419,3 +1401,29 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--text
 .subsection-head { margin: 64px 0 22px; }
 .subsection-title { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 700; letter-spacing: -0.02em; }
 .subsection-sub { color: var(--text-dim); margin-top: 6px; max-width: 640px; }
+
+/* ============================================================
+   Company logos (always on a white tile so dark logos stay legible)
+   ============================================================ */
+.logo-tile {
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.logo-tile img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+
+.proof-company { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; letter-spacing: -0.01em; color: var(--text-dim); }
+.proof-mark { width: 30px; height: 30px; padding: 3px; border-radius: 8px; transition: transform 0.2s ease; }
+.proof-company:hover .proof-mark { transform: translateY(-2px); }
+.proof-logos { gap: 10px 18px; }
+
+.fc-logo { width: 40px; height: 40px; padding: 5px; border-radius: 11px; }
+.bento-corner-logo { position: absolute; top: 18px; right: 18px; width: 48px; height: 48px; padding: 6px; }
+
+.timeline-title { display: flex; align-items: flex-start; gap: 14px; }
+.tl-logo { width: 48px; height: 48px; padding: 6px; }
+@media (max-width: 640px) { .tl-logo { width: 40px; height: 40px; padding: 5px; } .timeline-title { gap: 12px; } }

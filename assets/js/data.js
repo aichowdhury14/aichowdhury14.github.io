@@ -42,6 +42,7 @@ const PORTFOLIO_DATA = {
   experience: [
     {
       company: "BRAC Bank PLC",
+      logoMark: "assets/img/logos/brac-bank-mark.webp",
       role: "Associate Manager, R&D (Predictive AI)",
       location: "Dhaka, Bangladesh",
       start: "Apr 2025",
@@ -61,6 +62,7 @@ const PORTFOLIO_DATA = {
     },
     {
       company: "Next Ventures",
+      logoMark: "assets/img/logos/next-ventures-mark.webp",
       role: "Senior Data Analyst",
       location: "Dhaka, Bangladesh",
       start: "Feb 2024",
@@ -75,6 +77,7 @@ const PORTFOLIO_DATA = {
     },
     {
       company: "FinSource Limited",
+      logoMark: "assets/img/logos/finsource-mark.webp",
       role: "Team Lead (Data)",
       location: "Dhaka, Bangladesh",
       start: "Jun 2023",
@@ -89,6 +92,7 @@ const PORTFOLIO_DATA = {
     },
     {
       company: "FinSource Limited",
+      logoMark: "assets/img/logos/finsource-mark.webp",
       role: "Data Analyst",
       location: "Dhaka, Bangladesh",
       start: "Aug 2021",
@@ -103,6 +107,7 @@ const PORTFOLIO_DATA = {
     },
     {
       company: "SureCash · TallyKhata",
+      logoMark: "assets/img/logos/tallykhata-mark.webp",
       role: "Associate Data Analyst",
       location: "Dhaka, Bangladesh",
       start: "Dec 2020",
@@ -116,6 +121,7 @@ const PORTFOLIO_DATA = {
     },
     {
       company: "Pioneer Alpha",
+      logoMark: "assets/img/logos/pioneer-alpha-mark.webp",
       role: "Research & Data Analyst",
       location: "Dhaka, Bangladesh",
       start: "Dec 2019",
