@@ -123,8 +123,7 @@
     const stats = [
       { num: "6+", label: "Years in data & AI" },
       { num: `${pubCount()}`, label: "Publications" },
-      { num: `${d.certifications.length}`, label: "Certifications" },
-      { num: `${d.projects.filter((p) => p.featured).length}`, label: "Live products" },
+      { num: "15+", label: "Certifications" },
     ];
     const statRow = $("#stat-row");
     stats.forEach((s) => statRow.appendChild(el("div", "stat", `<div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div>`)));
