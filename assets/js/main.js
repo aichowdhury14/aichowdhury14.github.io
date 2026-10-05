@@ -381,6 +381,35 @@
     buildMarkerRow("Talks", talksByYear, "ct-mark-honor");
     wrap.appendChild(guideLayer);
 
+    // Phones get a vertical year-by-year list instead of the compressed horizontal chart.
+    const mobile = el("ol", "ct-mobile");
+    for (let y = maxYear; y >= minYear; y--) {
+      const started = roles.filter((r) => r.start === y);
+      const counts = [
+        ["Publications", pubsByYear[y], "ctl-pubs"],
+        ["Certifications", certsByYear[y], "ctl-certs"],
+        ["Talks & teaching", talksByYear[y], "ctl-honors"],
+      ].filter(([, items]) => items);
+      if (!started.length && !counts.length) continue;
+      mobile.appendChild(
+        el(
+          "li",
+          "ctm-year",
+          `<span class="ctm-label">${y}</span>
+           <div class="ctm-body">
+             ${started
+               .map(
+                 (r) =>
+                   `<div class="ctm-role"><span class="ctl-dot ctl-roles"></span><span>${r.label}${r.current ? ' <span class="now-badge">Current</span>' : ""}</span></div>`
+               )
+               .join("")}
+             ${counts.length ? `<div class="ctm-chips">${counts.map(([label, items, cls]) => `<span class="ctm-chip"><span class="ctl-dot ${cls}"></span>${label} <b>${items.length}</b></span>`).join("")}</div>` : ""}
+           </div>`
+        )
+      );
+    }
+    wrap.after(mobile);
+
     if (!reduceMotion) {
       const obs = new IntersectionObserver(
         (entries) => {

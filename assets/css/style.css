@@ -8,7 +8,7 @@
   --border: #232a3a;
   --text: #e7ebf3;
   --text-dim: #9aa5b8;
-  --text-faint: #626c80;
+  --text-faint: #848ea3;
 
   --accent-1: #5eead4; /* teal */
   --accent-2: #7c9cff; /* blue-violet */
@@ -28,6 +28,7 @@
   --max-w: 1120px;
   --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
   --font: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 
@@ -39,7 +40,7 @@
     --border: #e1e5ef;
     --text: #161a24;
     --text-dim: #4c5567;
-    --text-faint: #838da3;
+    --text-faint: #636c82;
     --shadow: 0 10px 30px -14px rgba(30, 40, 70, 0.25);
     --chart-bar: #0d9488;
     --chart-bar-hover: #0f766e;
@@ -58,7 +59,7 @@
   --border: #e1e5ef;
   --text: #161a24;
   --text-dim: #4c5567;
-  --text-faint: #838da3;
+  --text-faint: #636c82;
   --shadow: 0 10px 30px -14px rgba(30, 40, 70, 0.25);
   --chart-bar: #0d9488;
   --chart-bar-hover: #0f766e;
@@ -814,11 +815,39 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
 .ctl-certs { background: var(--accent-3); }
 .ctl-honors { background: #fbbf24; }
 
+.ct-mobile { display: none; }
 @media (max-width: 640px) {
-  .ct-row-label { width: 78px; font-size: 0.72rem; }
-  .ct-axis { margin-left: 96px; }
-  .ct-guideline-layer { left: 96px; }
+  #career-timeline-chart, .career-timeline-legend, .ct-hint { display: none; }
+  .career-timeline-head { margin-bottom: 18px; }
+  .ct-mobile { display: block; position: relative; }
+  .ct-mobile::before { content: ""; position: absolute; left: 22px; top: 14px; bottom: 14px; width: 2px; background: var(--border); }
 }
+.ctm-year { position: relative; display: grid; grid-template-columns: 46px 1fr; gap: 14px; padding: 9px 0; }
+.ctm-label {
+  position: relative; z-index: 1;
+  height: fit-content;
+  padding: 3px 0;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  text-align: center;
+  font: 700 0.76rem var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.ctm-body { display: flex; flex-direction: column; gap: 8px; padding-top: 2px; }
+.ctm-role { display: flex; gap: 9px; align-items: baseline; font-size: 0.86rem; font-weight: 600; line-height: 1.4; }
+.ctm-role .ctl-dot { flex: none; }
+.ctm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ctm-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+.ctm-chip b { color: var(--text); font-variant-numeric: tabular-nums; }
 
 /* ============================================================
    Experience timeline
@@ -1377,3 +1406,16 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--text
   .loc-pin::before { animation: ping 2.4s ease-out infinite; }
   .loc-pin::after { animation: ping 2.4s ease-out 1.2s infinite; }
 }
+
+/* ============================================================
+   Display type + in-section subheadings
+   ============================================================ */
+.hero h1, .section-title, .contact-title, .talk-featured-title, .subsection-title, .stat-num, .fc-num, .talk-stat-num {
+  font-family: var(--font-display);
+}
+.hero h1 { letter-spacing: -0.035em; }
+.section-title, .contact-title { letter-spacing: -0.025em; }
+
+.subsection-head { margin: 64px 0 22px; }
+.subsection-title { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 700; letter-spacing: -0.02em; }
+.subsection-sub { color: var(--text-dim); margin-top: 6px; max-width: 640px; }

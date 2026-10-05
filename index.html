@@ -26,7 +26,7 @@
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -188,7 +188,7 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
       <div class="career-timeline-card reveal">
         <div class="career-timeline-head">
           <div class="career-timeline-title">Career &amp; Research Timeline</div>
-          <div class="career-timeline-sub">Roles, publications, and certifications by year — hover any mark for detail.</div>
+          <div class="career-timeline-sub">Roles, publications, certifications and talks by year<span class="ct-hint"> — hover any mark for detail</span>.</div>
         </div>
         <div id="career-timeline-chart"></div>
         <div class="career-timeline-legend">
@@ -214,6 +214,12 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
       <div class="project-filters reveal" id="project-filters" role="group" aria-label="Filter projects"></div>
       <div class="project-featured" id="project-featured"></div>
       <div class="project-grid" id="project-grid"></div>
+
+      <div class="subsection-head reveal">
+        <h3 class="subsection-title">Earlier academic work</h3>
+        <p class="subsection-sub">Full-stack, mobile, and database projects from B.Sc. coursework and freelance work.</p>
+      </div>
+      <div class="mini-project-grid" id="academic-projects-grid"></div>
     </div>
   </section>
 
@@ -242,20 +248,8 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
     </div>
   </section>
 
-  <!-- ACADEMIC PROJECTS -->
-  <section id="academic-projects" class="section-band">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="section-eyebrow">From University</span>
-        <h2 class="section-title">Academic & Additional Projects</h2>
-        <p class="section-sub">Earlier full-stack, mobile, and database work from B.Sc. coursework and freelance projects.</p>
-      </div>
-      <div class="mini-project-grid" id="academic-projects-grid"></div>
-    </div>
-  </section>
-
   <!-- PUBLICATIONS -->
-  <section id="publications">
+  <section id="publications" class="section-band">
     <div class="container">
       <div class="section-head reveal">
         <span class="section-eyebrow">Research</span>
@@ -268,11 +262,15 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
   </section>
 
   <!-- CERTIFICATIONS -->
-  <section id="certifications" class="section-band">
+  <section id="certifications">
     <div class="container">
       <div class="section-head reveal">
         <span class="section-eyebrow">Credentials</span>
-        <h2 class="section-title">Certifications</h2>
+        <h2 class="section-title">Education &amp; Certifications</h2>
+      </div>
+      <div class="edu-grid" id="education-list"></div>
+      <div class="subsection-head reveal">
+        <h3 class="subsection-title">Certifications</h3>
       </div>
       <div class="list-panel cert-grid" id="certifications-list"></div>
     </div>
@@ -282,17 +280,6 @@ risk = <span class="tok-fn">score_transaction</span>(txn)
   <section id="cert-gallery" style="display: none; padding-top: 0;">
     <div class="container">
       <div class="cert-gallery-grid" id="cert-gallery-grid"></div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="section-eyebrow">Background</span>
-        <h2 class="section-title">Education</h2>
-      </div>
-      <div class="edu-grid" id="education-list"></div>
     </div>
   </section>
 
