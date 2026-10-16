@@ -987,6 +987,7 @@ section { padding: 104px 0; scroll-margin-top: 72px; }
   0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 60%, transparent); }
   100% { box-shadow: 0 0 0 8px transparent; }
 }
+.card-featured .chip-row { margin-bottom: 22px; }
 .card-featured .project-link {
   padding: 10px 18px;
   border-radius: 999px;
