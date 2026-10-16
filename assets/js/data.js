@@ -137,6 +137,17 @@ const PORTFOLIO_DATA = {
 
   projects: [
     {
+      title: "BD Salary Compass",
+      tag: "Personal Project · Salary Analytics",
+      image: "assets/img/projects/bd-salary-compass.jpg",
+      description:
+        "Free, private salary tools for Bangladesh: check whether you're paid fairly at named employers (Unilever, City Bank, Grameenphone, bKash and more), work out take-home pay and income tax under the Finance Act 2026, compare job offers, check a job post, and look up the 2026 government pay scale. Estimates come from a weighted ridge-regression model fitted to 82 published salary figures, and everything runs in the browser — nothing you enter is stored.",
+      stack: ["Next.js", "TypeScript", "Python", "Ridge Regression", "Recharts"],
+      link: "https://bd-salary-compass.vercel.app/",
+      linkLabel: "Visit the live site",
+      featured: true,
+    },
+    {
       title: "BD Invest Hub",
       tag: "Personal Project · FinTech",
       image: "assets/img/projects/bd-invest-hub.jpg",

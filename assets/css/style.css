@@ -1429,3 +1429,23 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--text
 .timeline-title { display: flex; align-items: flex-start; gap: 14px; }
 .tl-logo { width: 48px; height: 48px; padding: 6px; }
 @media (max-width: 640px) { .tl-logo { width: 40px; height: 40px; padding: 5px; } .timeline-title { gap: 12px; } }
+
+/* With an odd number of live products, the first (newest) one spans the full row, image beside text. */
+@media (min-width: 900px) {
+  .project-featured > .card-featured:first-child:nth-last-child(odd):not(:only-child) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+  }
+  .project-featured > .card-featured:first-child:nth-last-child(odd):not(:only-child) .browser-frame {
+    margin: 24px 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .project-featured > .card-featured:first-child:nth-last-child(odd):not(:only-child) .project-card-body {
+    border-top: 0;
+    padding: 28px 32px;
+  }
+  .project-featured > .card-featured:first-child:nth-last-child(odd):not(:only-child) .project-title { font-size: 1.5rem; }
+}
