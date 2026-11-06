@@ -1,19 +1,19 @@
 <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="glow" cx="50%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#7c9cff" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#7c9cff" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#e0954f" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#e0954f" stop-opacity="0"/>
     </radialGradient>
     <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
-      <circle cx="1" cy="1" r="1" fill="#242b3d"/>
+      <circle cx="1" cy="1" r="1" fill="#1d3a57"/>
     </pattern>
   </defs>
-  <rect width="800" height="450" fill="#0d1220"/>
+  <rect width="800" height="450" fill="#0f2236"/>
   <rect width="800" height="450" fill="url(#dots)"/>
   <rect width="800" height="450" fill="url(#glow)"/>
 
   <g transform="translate(400,290)" fill="none" stroke-width="22" stroke-linecap="round">
-    <path d="M -170 0 A 170 170 0 0 1 -85 -147" stroke="#5eead4" opacity="0.9"/>
+    <path d="M -170 0 A 170 170 0 0 1 -85 -147" stroke="#f2b880" opacity="0.9"/>
     <path d="M -85 -147 A 170 170 0 0 1 85 -147" stroke="#fbbf24" opacity="0.9"/>
     <path d="M 85 -147 A 170 170 0 0 1 170 0" stroke="#fb7185" opacity="0.9"/>
   </g>

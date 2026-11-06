@@ -11,6 +11,7 @@ const PORTFOLIO_DATA = {
     name: "Atiqul Islam Chowdhury",
     initials: "AIC",
     title: "AI & ML Engineer · Senior Data Scientist",
+    motto: "From data to decisions.",
     tagline:
       "I build end-to-end machine learning systems — from raw data pipelines to production models — for banking, fintech, and research.",
     location: "Dhaka, Bangladesh",
@@ -640,18 +641,18 @@ const PORTFOLIO_DATA = {
     {
       type: "Teaching",
       featured: true,
-      title: "Data Instructor — Data Analytics Career Bootcamp",
+      title: "SQL Mentor — Data Analytics Career Bootcamp",
       org: "Human Development Network Bangladesh (HDNB)",
       date: "Jul 2024 – Present",
-      image: "assets/img/hdnb-bootcamp-faculty.jpg",
+      image: "assets/img/hdnb-bootcamp-mentors.jpg",
       imageAlt:
-        "HDNB Data Analytics Career Bootcamp faculty: Md. Taimur Islam (City Bank), Atiqul Islam Chowdhury (BRAC Bank), Mobussira Tazrin Saima (Next Ventures), Kazi Jubair Radin (ACI) and Md Rahat Anwar Khan (ASA International)",
+        "HDNB Data Analytics Career Bootcamp mentors: Fatehin Siddique Chowdhury (Banglalink), Atiqul Islam Chowdhury (BRAC Bank) and S. M. Al Faruqui (Field Nation)",
       description:
-        "Faculty member on a live, mentor-led bootcamp that takes aspiring analysts from foundations through Excel, SQL, Python and Power BI to a job-ready portfolio. I teach the career-readiness classes: building a data analyst portfolio, CV and LinkedIn refinement, and interview preparation.",
+        "Mentor on HDNB's live, mentor-led bootcamp that takes aspiring analysts from Excel through SQL to Python, taught by practitioners from Banglalink, BRAC Bank and Field Nation. I teach Module 2, SQL (classes 5–8): relational databases and core SQL, JOINs and multi-table analysis, subqueries, CTEs and window functions, and turning SQL into business KPIs.",
       stats: [
-        ["19", "live classes"],
-        ["5", "industry leads"],
-        ["90", "learners per cohort"],
+        ["12", "live classes"],
+        ["3", "modules"],
+        ["5,000+", "HDNB learners"],
       ],
       link: "https://hdnb.net/bootcamp/data-analytics",
       linkLabel: "View the bootcamp",

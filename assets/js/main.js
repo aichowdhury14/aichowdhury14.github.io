@@ -64,6 +64,7 @@
     const last = parts.pop();
     $("#hero-name").innerHTML = `${parts.join(" ")} <span class="grad">${last}</span>`;
     $("#hero-role").textContent = p.title;
+    $("#hero-motto").textContent = p.motto;
     $("#hero-tagline").textContent = p.tagline;
     $("#hero-location").textContent = p.location;
     $("#footer-name").textContent = p.name;
@@ -545,6 +546,10 @@
 
   /* ---------- Talks, teaching & recognition ---------- */
   function renderTalks() {
+    const statsHtml = (e) =>
+      e.stats
+        ? `<div class="talk-stats">${e.stats.map(([n, l]) => `<div class="talk-stat"><span class="talk-stat-num">${n}</span><span class="talk-stat-label">${l}</span></div>`).join("")}</div>`
+        : "";
     const featuredWrap = $("#talks-featured");
     const grid = $("#talks-grid");
     const badge = (type) => `<span class="talk-type talk-${type.toLowerCase()}"><span class="talk-icon">${ICONS[type.toLowerCase()] || ""}</span>${type}</span>`;
@@ -557,13 +562,12 @@
           el(
             "article",
             "talk-featured reveal",
-            `${e.image ? `<div class="talk-media"><img src="${e.image}" alt="${e.imageAlt || ""}" loading="lazy"></div>` : ""}
+            `<div class="talk-media">${e.image ? `<img src="${e.image}" alt="${e.imageAlt || ""}" width="1000" height="489" loading="lazy">` : ""}${statsHtml(e)}</div>
              <div class="talk-featured-body">
                <div class="talk-top">${badge(e.type)}<span class="talk-date">${e.date}</span></div>
                <h3 class="talk-featured-title">${e.title}</h3>
                <div class="talk-org">${e.org}</div>
                <p class="talk-desc">${e.description}</p>
-               ${e.stats ? `<div class="talk-stats">${e.stats.map(([n, l]) => `<div class="talk-stat"><span class="talk-stat-num">${n}</span><span class="talk-stat-label">${l}</span></div>`).join("")}</div>` : ""}
                ${linkOut(e)}
              </div>`
           )
