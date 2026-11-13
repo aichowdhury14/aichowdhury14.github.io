@@ -138,6 +138,17 @@ const PORTFOLIO_DATA = {
 
   projects: [
     {
+      title: "PricePulse BD",
+      tag: "Personal Project · Price Analytics",
+      image: "assets/img/projects/pricepulse-bd.jpg",
+      description:
+        "Daily price intelligence for Bangladesh's essentials, built on 105k scraped rows covering 61 commodities in Dhaka since 2020 (TCB) and validated against WFP's independent survey (r = 0.85–0.97). It detects price spikes (caught 6 of 6 documented shocks within 0–5 days), measures Ramadan and Eid effects with event studies, and publishes calibrated 80% price ranges from conformal ML after a rolling backtest of 39,652 forecasts. Bilingual site (English / বাংলা), refreshed every day by a GitHub Action.",
+      stack: ["Python", "pandas", "statsmodels", "scikit-learn", "GitHub Actions"],
+      link: "https://pricepulsebd.vercel.app/",
+      linkLabel: "Visit the live site",
+      featured: true,
+    },
+    {
       title: "BD Salary Compass",
       tag: "Personal Project · Salary Analytics",
       image: "assets/img/projects/bd-salary-compass.jpg",
