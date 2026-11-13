@@ -141,6 +141,8 @@ const PORTFOLIO_DATA = {
       title: "PricePulse BD",
       tag: "Personal Project · Price Analytics",
       image: "assets/img/projects/pricepulse-bd.jpg",
+      summary: "Daily price intelligence for Bangladesh's essentials: spike alerts, Ramadan and Eid effects, and calibrated 80% price ranges, refreshed every day in English and বাংলা.",
+      metrics: [["105k", "price rows, 61 items"], ["6 / 6", "price shocks caught"], ["r 0.85–0.97", "match with WFP survey"]],
       description:
         "Daily price intelligence for Bangladesh's essentials, built on 105k scraped rows covering 61 commodities in Dhaka since 2020 (TCB) and validated against WFP's independent survey (r = 0.85–0.97). It detects price spikes (caught 6 of 6 documented shocks within 0–5 days), measures Ramadan and Eid effects with event studies, and publishes calibrated 80% price ranges from conformal ML after a rolling backtest of 39,652 forecasts. Bilingual site (English / বাংলা), refreshed every day by a GitHub Action.",
       stack: ["Python", "pandas", "statsmodels", "scikit-learn", "GitHub Actions"],
@@ -152,6 +154,8 @@ const PORTFOLIO_DATA = {
       title: "BD Salary Compass",
       tag: "Personal Project · Salary Analytics",
       image: "assets/img/projects/bd-salary-compass.jpg",
+      summary: "Free, private salary tools for Bangladesh: fair-pay checks at named employers, take-home pay and tax under the Finance Act 2026, and job-offer comparison.",
+      metrics: [["82", "published salaries modelled"], ["2026", "tax rules built in"], ["0", "data stored, runs in browser"]],
       description:
         "Free, private salary tools for Bangladesh: check whether you're paid fairly at named employers (Unilever, City Bank, Grameenphone, bKash and more), work out take-home pay and income tax under the Finance Act 2026, compare job offers, check a job post, and look up the 2026 government pay scale. Estimates come from a weighted ridge-regression model fitted to 82 published salary figures, and everything runs in the browser — nothing you enter is stored.",
       stack: ["Next.js", "TypeScript", "Python", "Ridge Regression", "Recharts"],
@@ -163,6 +167,8 @@ const PORTFOLIO_DATA = {
       title: "BD Invest Hub",
       tag: "Personal Project · FinTech",
       image: "assets/img/projects/bd-invest-hub.jpg",
+      summary: "Rate comparison and investment calculator for Bangladeshi savers, with tax-aware maturity projections across FDR, DPS, Sanchayapatra and Treasury instruments.",
+      metrics: [["55+", "products tracked"], ["25", "institutions"], ["PWA", "installable app"]],
       description:
         "A live rate-comparison and investment calculator for Bangladeshi savers — tracks 55+ products across 25 institutions (FDR, DPS, Sanchayapatra, Treasury instruments) with tax-aware maturity projections and smart recommendations. Backed by a scheduled scraper pipeline feeding the same database as a manual-entry admin panel, shipped as an installable PWA.",
       stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "GitHub Actions"],
@@ -174,6 +180,8 @@ const PORTFOLIO_DATA = {
       title: "Data Lab · ডেটা ল্যাব",
       tag: "Personal Project · EdTech",
       image: "assets/img/projects/data-lab.jpg",
+      summary: "A free, bilingual playground for learning data and AI by doing, with live in-browser SQL, ML and LLM labs. Nothing to install, no sign-up.",
+      metrics: [["18", "SQL lessons"], ["8", "interactive ML models"], ["8", "AI / LLM labs"]],
       description:
         "A free, bilingual (English & বাংলা) playground for learning data and AI by doing — 18 SQL lessons on a live in-browser SQLite console, a step-by-step data-cleaning pipeline, 8 interactive ML models including RFM segmentation, and 8 AI/LLM labs that open up tokens, attention, RAG and agents. Built on 8 Bangladesh-flavored practice datasets; nothing to install, no sign-up.",
       stack: ["React", "Vite", "SQLite", "SVG Charts", "Vercel"],
@@ -297,7 +305,7 @@ const PORTFOLIO_DATA = {
   ],
 
   skills: [
-    { category: "Programming", items: ["Python", "R", "SQL / PL-SQL", "Java", "C"] },
+    { category: "Programming & Web", items: ["Python", "R", "SQL / PL-SQL", "Java", "C", "HTML", "CSS", "JavaScript"] },
     {
       category: "Machine Learning",
       items: [
@@ -342,18 +350,14 @@ const PORTFOLIO_DATA = {
       ],
     },
     {
-      category: "Databases",
-      items: ["Oracle", "PostgreSQL", "MySQL", "PL/SQL", "T-SQL", "Stored Procedures", "Query Optimization", "Database Design", "ETL"],
+      category: "Databases & Migration",
+      items: ["Oracle", "PostgreSQL", "MySQL", "PL/SQL", "T-SQL", "Stored Procedures", "Query Optimization", "Database Design", "ETL", "AWS Database Migration Service", "DBConvert"],
     },
-    { category: "Data Migration", items: ["AWS Database Migration Service", "DBConvert"] },
     {
-      category: "Visualization & BI",
-      items: ["Power BI", "Tableau", "Looker Studio", "Metabase", "Superset", "DAX", "Dashboard Design", "Data Storytelling"],
+      category: "Visualization & Reporting",
+      items: ["Power BI", "Tableau", "Looker Studio", "Metabase", "Superset", "DAX", "Dashboard Design", "Data Storytelling", "Crystal Reports", "Advanced Excel", "Report Automation", "MS Office"],
     },
-    { category: "Reporting", items: ["Crystal Reports", "MS Office", "Advanced Excel", "Report Automation"] },
-    { category: "Web", items: ["HTML", "CSS", "JavaScript"] },
-    { category: "MLOps & Deployment", items: ["Git", "Model Deployment", "CI/CD Pipelines"] },
-    { category: "Tools", items: ["ClickUp", "Notion", "Azure DevOps"] },
+    { category: "MLOps & Tools", items: ["Git", "Model Deployment", "CI/CD Pipelines", "Azure DevOps", "ClickUp", "Notion"] },
   ],
 
   education: [

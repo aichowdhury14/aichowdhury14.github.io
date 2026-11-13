@@ -218,10 +218,13 @@
     const tl = $("#timeline");
     d.experience.forEach((job, i) => {
       const isCurrent = /present/i.test(job.end);
-      const extra = job.points.length - VISIBLE_POINTS;
+      const moreLabel = (n) => (isCurrent ? `Show ${n} more` : `Show ${n} highlights`);
+      // The current role shows its first points; past roles collapse to a one-line header.
+      const visible = isCurrent ? VISIBLE_POINTS : 0;
+      const extra = job.points.length - visible;
       const item = el(
         "div",
-        `timeline-item reveal${isCurrent ? " is-current" : ""}`,
+        `timeline-item reveal${isCurrent ? " is-current" : " is-past"}`,
         `
         <div class="timeline-dot"></div>
         <div class="timeline-card">
@@ -236,9 +239,9 @@
             <div class="timeline-date">${isCurrent ? '<span class="now-badge">Current</span>' : ""}${job.start} — ${job.end}</div>
           </div>
           <ul class="timeline-points" id="tl-points-${i}">${job.points
-            .map((p, k) => `<li${k >= VISIBLE_POINTS ? " hidden" : ""}>${p}</li>`)
+            .map((p, k) => `<li${k >= visible ? " hidden" : ""}>${p}</li>`)
             .join("")}</ul>
-          ${extra > 0 ? `<button class="tl-more" type="button" aria-expanded="false" aria-controls="tl-points-${i}">Show ${extra} more</button>` : ""}
+          ${extra > 0 ? `<button class="tl-more" type="button" aria-expanded="false" aria-controls="tl-points-${i}">${moreLabel(extra)}</button>` : ""}
         </div>
       `
       );
@@ -247,10 +250,11 @@
         btn.addEventListener("click", () => {
           const open = btn.getAttribute("aria-expanded") !== "true";
           item.querySelectorAll(".timeline-points li").forEach((li, k) => {
-            if (k >= VISIBLE_POINTS) li.hidden = !open;
+            if (k >= visible) li.hidden = !open;
           });
+          item.classList.toggle("is-open", open);
           btn.setAttribute("aria-expanded", String(open));
-          btn.textContent = open ? "Show less" : `Show ${extra} more`;
+          btn.textContent = open ? "Show less" : moreLabel(extra);
         });
       }
       tl.appendChild(item);
@@ -454,7 +458,8 @@
       <div class="project-card-body">
         ${meta}
         <div class="project-title">${p.title}</div>
-        <div class="project-desc">${p.description}</div>
+        <div class="project-desc">${p.summary || p.description}</div>
+        ${p.metrics ? `<div class="project-metrics">${p.metrics.map(([n, l]) => `<div class="project-metric"><span class="project-metric-num">${n}</span><span class="project-metric-label">${l}</span></div>`).join("")}</div>` : ""}
         <div class="chip-row">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>
         ${p.link ? `<a class="project-link" href="${p.link}" target="_blank" rel="noopener">${p.linkLabel || "Read the paper"} →</a>` : ""}
       </div>`;
@@ -480,7 +485,8 @@
     );
   }
 
-  const PROJECT_LIMIT = 6;
+  // Cards stack one per row on phones, so show fewer there before "Show more".
+  const PROJECT_LIMIT = window.matchMedia("(max-width: 640px)").matches ? 3 : 6;
   function renderProjects() {
     const grid = $("#project-grid");
     const featured = $("#project-featured");
@@ -590,17 +596,13 @@
 
   /* ---------- Skills ---------- */
   const SKILL_ICONS = {
-    Programming: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 3 12l5 7M16 5l5 7-5 7M13 4l-2 16"/></svg>',
+    "Programming & Web": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 3 12l5 7M16 5l5 7-5 7M13 4l-2 16"/></svg>',
     "Machine Learning": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6.8 10.3 11M7 17.2 10.3 13M13.7 11 17 6.8M13.7 13 17 17.2"/></svg>',
     "Deep Learning & AI": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.5 4.5l2 2M17.5 17.5l2 2M19.5 4.5l-2 2M6.5 17.5l-2 2"/></svg>',
     "Data Science": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
-    Databases: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>',
-    "Data Migration": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>',
-    "Visualization & BI": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21H4a1 1 0 0 1-1-1V3"/><path d="M7 15l3.5-4.5 3 3L19 6"/></svg>',
-    Reporting: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5Z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>',
-    Web: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-6-4-9s1.5-6.4 4-9Z"/></svg>',
-    "MLOps & Deployment": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>',
-    Tools: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2 2.8-2.8Z"/></svg>',
+    "Databases & Migration": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>',
+    "Visualization & Reporting": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21H4a1 1 0 0 1-1-1V3"/><path d="M7 15l3.5-4.5 3 3L19 6"/></svg>',
+    "MLOps & Tools": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>',
   };
 
   function renderSkills() {
@@ -740,7 +742,7 @@
         )
       )
     );
-    makeCollapsible(wrap, items.slice(4), `Show all ${items.length} projects`);
+    makeCollapsible(wrap, items, `Show ${items.length} academic projects`);
   }
 
   /* ---------- Certifications ---------- */
