@@ -446,12 +446,13 @@
   /* ---------- Projects ---------- */
   const PROJECT_FILTERS = [
     ["all", "All"],
+    ["ai", "AI & LLM"],
     ["personal", "Personal Projects"],
     ["banking", "Banking & Fintech"],
     ["research", "Research & Analytics"],
   ];
   const projectCategory = (p) =>
-    p.tag.startsWith("Personal Project") ? "personal" : p.tag.startsWith("Banking") ? "banking" : "research";
+    p.tag.startsWith("AI Engineering") ? "ai" : p.tag.startsWith("Personal Project") ? "personal" : p.tag.startsWith("Banking") ? "banking" : "research";
 
   function projectCard(p) {
     const body = (meta) => `

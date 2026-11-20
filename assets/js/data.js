@@ -190,6 +190,49 @@ const PORTFOLIO_DATA = {
       featured: true,
     },
     {
+      title: "HoloCall",
+      tag: "AI Engineering · Computer Vision",
+      image: "assets/img/projects/holo-call.jpg",
+      summary: "Hologram video calls and real-size product viewing from any phone: on-device AI cuts the person out of the video and stands them in your room, over your camera or life-size on your floor.",
+      metrics: [["6", "use-case modes"], ["12", "viewers per broadcast"], ["0", "installs, runs in browser"]],
+      description:
+        "Hologram video calls and real-size product viewing from any phone. MediaPipe person segmentation runs on the device, three.js places the cut-out in a virtual room, over the camera or on the real floor with WebXR, and WebRTC connects the call. Modes for calls, shopping in a Bangladeshi room, live selling, classes and stage talks.",
+      stack: ["JavaScript", "MediaPipe", "three.js", "WebRTC", "WebXR"],
+      link: "https://holo-call.vercel.app/",
+      linkLabel: "Visit the live site",
+      featured: true,
+    },
+    {
+      title: "LLM Eval Pipeline",
+      tag: "AI Engineering · LLM Evaluation",
+      image: "assets/img/projects/llm-eval-pipeline.svg",
+      description:
+        "Regression testing for a question-answering bot: runs a frozen SQuAD question set through a local RAG bot, logs every answer and retrieved passage to DuckDB, and scores exact match, F1 and retrieval hit rate. A planted retrieval fault dropped F1 from 0.71 to 0.05 and was flagged automatically.",
+      stack: ["Python", "DuckDB", "Ollama", "Streamlit", "GitHub Actions"],
+      link: "https://github.com/aichowdhury14/llm-eval-pipeline",
+      linkLabel: "View on GitHub",
+    },
+    {
+      title: "SLM Lab: Offline Tax Bot",
+      tag: "AI Engineering · Small Language Models",
+      image: "assets/img/projects/slm-lab.svg",
+      description:
+        "A Bangladesh salary-tax assistant on a 1.7B small language model that runs fully offline on a CPU, in English and Bangla. The model only reads the question; code validates its JSON, computes the tax and writes the verdict, and bge-m3 retrieval grounds the explanation in the rules.",
+      stack: ["Python", "Ollama", "Qwen3", "bge-m3 RAG", "FastAPI"],
+      link: "https://github.com/aichowdhury14/slm-lab",
+      linkLabel: "View on GitHub",
+    },
+    {
+      title: "Bangla Mini-GPT",
+      tag: "AI Engineering · LLM from Scratch",
+      image: "assets/img/projects/bangla-mini-gpt.svg",
+      description:
+        "A Bangla language model built from scratch: a 16k-piece SentencePiece tokenizer and a Llama-style transformer (RoPE, RMSNorm, SwiGLU) up to 49M parameters, trained on Bangla Wikipedia and exported to GGUF to run in Ollama. A test proves exact output parity with Hugging Face's Llama.",
+      stack: ["PyTorch", "SentencePiece", "Transformers", "GGUF", "Ollama"],
+      link: "https://github.com/aichowdhury14/bangla-mini-gpt",
+      linkLabel: "View on GitHub",
+    },
+    {
       title: "Bangladesh MFS Market Analysis",
       tag: "Personal Project · FinTech Analytics",
       image: "assets/img/projects/mfs-analysis.svg",

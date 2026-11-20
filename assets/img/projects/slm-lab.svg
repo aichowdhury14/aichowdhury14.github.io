@@ -1,0 +1,37 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f2b880"/>
+      <stop offset="55%" stop-color="#e0954f"/>
+      <stop offset="100%" stop-color="#d0803f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#e0954f" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#e0954f" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#1d3a57"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="#0f2236"/>
+  <rect width="800" height="450" fill="url(#dots)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <rect x="160" y="150" width="120" height="150" rx="8" fill="none" stroke="#33506e" stroke-width="1.4"/>
+  <line x1="182" y1="182" x2="258" y2="182" stroke="#33506e" stroke-width="1.2"/>
+  <line x1="182" y1="204" x2="246" y2="204" stroke="#33506e" stroke-width="1.2"/>
+  <line x1="182" y1="226" x2="252" y2="226" stroke="url(#g)" stroke-width="2"/>
+  <line x1="182" y1="248" x2="236" y2="248" stroke="#33506e" stroke-width="1.2"/>
+  <line x1="182" y1="270" x2="248" y2="270" stroke="#33506e" stroke-width="1.2"/>
+  <rect x="520" y="150" width="120" height="150" rx="10" fill="none" stroke="#33506e" stroke-width="1.4"/>
+  <rect x="540" y="168" width="80" height="30" rx="4" fill="none" stroke="url(#g)" stroke-width="2"/>
+  <g fill="#33506e"><rect x="540" y="214" width="20" height="16" rx="3"/><rect x="570" y="214" width="20" height="16" rx="3"/><rect x="600" y="214" width="20" height="16" rx="3"/><rect x="540" y="240" width="20" height="16" rx="3"/><rect x="570" y="240" width="20" height="16" rx="3"/><rect x="540" y="266" width="20" height="16" rx="3"/><rect x="570" y="266" width="20" height="16" rx="3"/></g>
+  <rect x="600" y="240" width="20" height="42" rx="3" fill="url(#g)"/>
+  <path d="M280 225 H340 M460 225 H520" stroke="url(#g)" stroke-width="2.6" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <g stroke="#33506e" stroke-width="2" stroke-linecap="round">
+    <path d="M370 165 v-14 M400 165 v-14 M430 165 v-14 M370 285 v14 M400 285 v14 M430 285 v14 M340 195 h-14 M340 225 h-14 M340 255 h-14 M460 195 h14 M460 225 h14 M460 255 h14"/>
+  </g>
+  <rect x="340" y="165" width="120" height="120" rx="14" fill="#0f2236" stroke="url(#g)" stroke-width="2.6"/>
+  <rect x="368" y="193" width="64" height="64" rx="8" fill="url(#g)" opacity="0.9"/>
+  <circle cx="400" cy="225" r="10" fill="#0f2236"/>
+</svg>
