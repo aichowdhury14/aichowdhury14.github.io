@@ -428,6 +428,12 @@ const PORTFOLIO_DATA = {
   // (assets/certificates/) — guaranteed to work, no dependency on third-party verify pages.
   certifications: [
     {
+      title: "Oracle Agentic AI Certified Foundations Associate",
+      issuer: "Oracle University",
+      date: "Oct 2026",
+      link: "assets/certificates/oracle-agentic-ai-foundations-associate.pdf",
+    },
+    {
       title: "Google Advanced Data Analytics (Specialization)",
       issuer: "Coursera / Google",
       date: "Apr 2026",
